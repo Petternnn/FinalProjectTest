@@ -11,6 +11,7 @@
   flex-direction: column;
   min-height: 0;
   box-sizing: border-box;
+  max-height: 100vh;
 }
 
 .header {
@@ -54,5 +55,8 @@
   .p {
     font-size: var(--font-size-base);
     margin-bottom: var(--space-3);
+  }
+  .main {
+    max-height: 150vh;
   }
 }

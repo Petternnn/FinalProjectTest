@@ -14,7 +14,7 @@ export default function ProtectedRoute({ children }) {
   console.log('[ProtectedRoute] Checking auth status. CurrentUser:', currentUser, 'Loading:', loading);
 
   
-   // If authentication state is still loading, don't render anything yet or show a loader.
+   // If authentication state is still loading, dont render anything yet or show a loader.
    // prevents a flash of the login page before the auth state is resolved.
   
   if (loading) {
