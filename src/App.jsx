@@ -1,5 +1,5 @@
 // src/App.jsx
-import AppRoutes from './routes/AppRoutes';
+import AppRoutes from './Routes/Routes';
 
 // Component: App
 // Description: Main application component that sets up routing.
