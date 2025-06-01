@@ -1,0 +1,103 @@
+/* src/styles/global.css */
+
+/* Import the CSS variables */
+@import './variables.css';
+
+/* Basic Reset & Global Styles */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--font-size-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family-sans-serif);
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background-color: var(--color-background);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make images responsive by default */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Remove default list styles */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Basic button styling */
+button {
+  cursor: pointer;
+  font-family: inherit; /* Inherit font from body */
+  font-size: inherit;
+  border: none;
+  background-color: transparent;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none; /* Or underline, depending on preference */
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline; /* Optional: underline on hover */
+}
+
+/* Basic form input styling (can be expanded) */
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  padding: var(--input-padding-y) var(--input-padding-x);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  transition: var(--transition-base);
+  width: 100%; /* Make inputs take full width of their container by default */
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 0;
+  border-color: var(--color-input-focus-border);
+  box-shadow: 0 0 0 0.25rem var(--color-input-focus-shadow);
+}
+
+/* Utility classes (optional, but can be helpful) */
+.text-center {
+  text-align: center;
+}
+
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+/* ... add more as needed */
+
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+/* ... add more as needed */
+
+      /* .wizard-button styles (lines 104-175) have been removed from here. */
+      /* They will be moved to ContentQAWizard.module.css */

@@ -1,0 +1,823 @@
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea {
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-2);
+  font-size: var(--font-size-sm);
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+  border-color: var(--color-input-focus-border);
+  outline: none;
+  box-shadow: 0 0 0 0.2rem var(--color-input-focus-shadow);
+}
+
+.darkText {
+  color: var(--color-text);
+  overflow-y: none;
+  display: flex;
+}
+
+.NumberInputContainer {
+  display: flex;
+  gap: var(--space-3);
+  flex-direction: row;
+  width: 100%;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+/* Styling for the wrappers of "Number of Questions" and "Grade Level" fields */
+.QuestionNumberInputField,
+.GradeLevelInputField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex-basis: calc(50% - (var(--space-3) / 2));
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.QuestionsContainer {
+  background-color: var(--color-background, whitesmoke);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  box-sizing: border-box;
+  flex-grow: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: var(--border-width) solid var(--color-border-light);
+  border-radius: var(--border-radius);
+  padding: var(--input-padding-x);
+}
+
+.QuestionsContainerPair {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    text-align: left;
+    /* qa-block styles are applied below */
+}
+
+.OuterContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* prevents the wizard from becoming excessively wide on large screens */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-3);
+  box-sizing: border-box;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+
+.wizard-progress-bar-container {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.wizardStepsPanelsContainer {
+  display: flex;
+  background-color: var(--color-background-darker, #e9ecef);
+  flex-wrap: nowrap;
+  width: 100%;
+  flex-grow: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  gap: var(--space-3);
+  align-items: stretch;
+  padding: var(--space-2);
+  border-radius: var(--border-radius-lg);
+  border: var(--border-width) solid var(--color-border-light);
+  height: 100%;
+}
+
+
+/* width is controlled by Framer Motion */
+.GeneratorStep1 {
+  background-color: var(--color-background, #f8f9fa);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  border: var(--border-width-panel) solid var(--color-panel-border);
+  border-radius: var(--border-radius-lg);
+  min-width: 0;
+  overflow-x: hidden;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+
+.OuterContainer > .GeneratorStep1:only-child {
+  flex-basis: 100%;
+}
+
+.GeneratorStep2 {
+  background-color: var(--color-background, #f8f9fa);
+  display: flex;
+  flex-direction: column;
+  border: var(--border-width-panel) solid var(--color-panel-border);
+  border-radius: var(--border-radius-lg);
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: var(--space-4);
+}
+
+/* Main container for Step 2s content */
+.QuestionAnswerContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
+  gap: var(--space-3);
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: hidden;
+  max-height: 100%;
+}
+
+.qaListScrollContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: var(--space-3);
+  margin: 0;
+  min-height: 152px; 
+  background-color: var(--color-background-darker, #e9ecef);
+  border-radius: var(--border-radius-sm);
+}
+
+.qaBlock {
+  background-color: var(--color-background-card, #ffffff);
+  padding: var(--space-3);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: var(--space-3);
+  border: var(--border-width) solid var(--color-border-light);
+  position: relative;
+  box-shadow: var(--shadow-sm, 0 2px 4px rgba(0,0,0,0.05));
+  transition: box-shadow 0.2s ease-in-out;
+}
+.qaBlock:hover {
+   box-shadow: var(--shadow, 0 4px 8px rgba(0,0,0,0.07));
+}
+
+.wizard-label {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-bottom: var(--input-padding-x);
+  color: var(--color-text, #213547);
+  font-weight: 500;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.wizard-label > span {
+  margin-bottom: var(--space-1);
+}
+
+.wizard-button {
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.95rem;
+  font-weight: 540;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  border: var(--border-width) solid transparent;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+}
+
+.wizard-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Primary Button (Example: PreviewQA or Finalize) */
+.wizard-button.primary {
+  background-color: var(--color-primary, #007bff);
+  color: var(--color-text-on-primary);
+  border-color: var(--color-primary, #007bff);
+}
+.wizard-button.primary:hover:not(:disabled) {
+  background-color: var(--color-primary-hover, #0056b3);
+  border-color: var(--color-primary-hover, #0056b3);
+}
+
+/* Secondary Button (Examplpe: Back button in wizard) */
+.wizard-button.secondary {
+  background-color: var(--color-background, #f0f0f0);
+  color: var(--color-text, #333);
+  border-color: var(--color-border, #ccc);
+}
+.wizard-button.secondary:hover:not(:disabled) {
+  background-color: var(--color-border-light, #e5e5e5);
+}
+
+/* "Add Questions button")*/
+.wizard-button.success {
+  background-color: transparent;
+  color: var(--color-success, #28a745);
+  border: var(--border-width) solid var(--color-success, #28a745);
+}
+
+.wizard-button.success:hover:not(:disabled) {
+  background-color: var(--color-success-light-bg, rgba(40, 167, 69, 0.1));
+  color: var(--color-success-dark, #1e7e34);
+  border-color: var(--color-success-dark, #1e7e34);
+}
+
+/* General style for label titles (applies to both Question and Answer labels) */
+.wizard-label-title {
+  display: block;
+}
+
+.wizard-label-title strong {
+  font-weight: 600;
+  color: var(--color-text, #333);
+  display: block;
+}
+
+/* push down the FIRST label title (Question label) to clear the delete button */
+.qa-block > .wizard-label-title:first-of-type {
+  margin-top: calc(var(--font-size-lg) + var(--space-1));
+}
+  
+/* Q&A card delete button */
+.qaDeleteButton {
+  background-color: var(--color-danger, #dc3545);
+  color: var(--color-text-light);
+  border: none;
+  border-radius: 50%;
+  width: var(--space-3);
+  height: var(--space-3);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  position: absolute;
+  top: var(--space-2, 8px);
+  right: var(--space-2, 8px);
+  z-index: 10;
+}
+
+.qaDeleteButton:hover {
+  background-color: var(--color-danger-hover, #bb2d3b);
+  transform: scale(1.1);
+}
+
+.qaDeleteButton:focus {
+  outline: var(--border-width-panel) solid var(--color-danger-hover, #bb2d3b);
+  outline-offset: 2px;
+}
+
+.qaDeleteButton:active {
+  transform: scale(0.95);
+}
+
+.qaDeleteIcon {
+  display: block;
+  /* width and height are set on the SVG element itself */
+}
+
+
+.qa-input,
+.qa-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.6rem var(--input-padding-x);
+  border: var(--border-width) solid var(--color-border, #ccc);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.95rem;
+  min-width: 0;
+}
+
+.qa-textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+
+.step1-content-wrapper {
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+}
+
+
+.wizard-label:not(.qa-block > .wizard-label) {
+    margin-bottom: var(--input-padding-x);
+}
+
+
+.wizard-input,
+.wizard-textarea {
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: var(--space-2);
+  font-size: var(--font-size-sm);
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out;
+  min-width: 0;
+
+}
+
+.wizard-input:focus,
+.wizard-textarea:focus {
+  border-color: var(--color-primary, #001e3d);
+  outline: none;
+}
+
+
+.add-qa-section {
+  display: flex;
+}
+
+/*  placeholder that contains the spinner, error message, or empty message before questions are generated  */
+.loadingPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-grow: 1;
+  width: 100%;
+  padding: var(--space-3);
+  box-sizing: border-box;
+  color: var(--color-text-secondary);
+}
+
+.loadingPlaceholder p {
+  margin-top: var(--space-2);
+  margin-bottom: 0;
+}
+
+.spinner {
+  border: var(--border-radius-lg) solid var(--spinner-track-light);
+  border-left-color: var(--color-primary);
+  border-radius: 50%;
+  width: var(--space-7);
+  height: var(--space-7);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Styles for the container of the "Back" and "Finalize" buttons */
+.qa-review-actions {
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  background-color: var(--color-background-card, #ffffff);
+  margin: 0;
+  padding: var(--space-3);
+  border-top: var(--border-width) solid var(--color-border, #dee2e6);
+  margin-top: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.GeneratorStep3 {
+  background-color: var(--color-background, #f8f9fa);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border: var(--border-width-panel) solid var(--color-panel-border);
+  border-radius: var(--border-radius-lg);
+  box-sizing: border-box;
+  padding: var(--space-4);
+  min-width: 0;
+  gap: var(--space-3);
+  height: 100%;
+}
+.GeneratorStep4 {
+  background-color: var(--color-background, #f8f9fa);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border: var(--border-width-panel) solid var(--color-panel-border);
+  border-radius: var(--border-radius-lg);
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-5, 2rem);
+  gap: var(--space-4, 1.5rem);
+}
+
+
+.GeneratorFormWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md, 1rem);
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.GeneratorFormContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+
+.step1FormContentScrollable {
+  flex-grow: 1;
+  overflow-y: auto;
+  min-height: 0;
+
+}
+
+
+.step3FormContentScrollable {
+  flex-grow: 1; 
+  overflow-y: auto; 
+  min-height: 0; 
+}
+
+/* Number Input Row */
+.NumberInputContainer {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  width: 100%;
+  min-width: 0;
+}
+.QuestionNumberInputField,
+.GradeLevelInputField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex-grow: 1;
+  flex-basis: 150px;
+  min-width: 0;
+}
+/* Target input directly to override browser defaults */
+.QuestionNumberInputField input[type="number"],
+.GradeLevelInputField input[type="number"] {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.FileInputContainer {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  position: relative;
+}
+
+.generateButtonContainer {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  margin-top: auto;
+  padding-top: var(--space-3);
+  flex-shrink: 0;
+}
+
+
+.GeneratorStep2 .button-group-spaced { 
+  background-color: var(--color-brand, #001e3d);
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: auto;
+  padding-top: var(--space-3, 1rem);
+  flex-shrink: 0;
+  gap: var(--space-3);
+}
+
+
+.step4-message {
+  color: var(--color-text);
+  text-align: center;
+  font-size: var(--font-size-lg, 1.125rem); 
+}
+
+.FinalStepButtonsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%; 
+  max-width: 320px; 
+  align-items: center; 
+}
+
+.step4-button {
+  width: 100%; 
+}
+
+.api-key-warning {
+  color: var(--color-warning-text-direct, orange);
+  background: var(--color-warning, #ffc107);
+  border: var(--border-width) solid var(--color-warning-border-direct, orange);
+  border-radius: var(--border-radius-sm);
+  padding: var(--space-2);
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.step-error-message {
+  color: var(--color-danger);
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.or-separator {
+  margin: var(--space-3) 0;
+  color: var(--color-text-secondary);
+  text-align: center;
+  font-size: var(--font-size-sm);
+}
+
+/* Step 3: Add extra spacing between stacked fields for clarity */
+.GeneratorStep3 .wizard-label {
+  margin-bottom: var(--font-size-lg);
+}
+
+
+.wizardInput[type="file"] {
+  width: 100%; 
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.stepNavigationButtons {
+  display: flex;
+  justify-content: space-between; }
+
+.wizardSelect {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: var(--space-2, 8px);
+  font-size: var(--font-size-sm, 14px);
+  font-family: inherit; 
+  color: var(--color-text, #213547);
+  background-color: var(--color-background-card, #fff);
+  border: var(--border-width, 1px) solid var(--color-border, #ccc);
+  border-radius: var(--border-radius, 6px);
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  min-width: 0;
+  cursor: pointer;
+
+  /* Custom dropdown arrow using an SVG */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333' width='18px' height='18px'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-2, 8px) center;
+  padding-right: calc(var(--space-2, 8px) + var(--space-4, 24px));
+}
+
+.wizardSelect:focus {
+  border-color: var(--color-input-focus-border, var(--color-primary, #001e3d));
+  outline: none;
+  box-shadow: 0 0 0 0.2rem var(--color-input-focus-shadow, rgba(0, 123, 255, 0.25));
+}
+
+.wizardSelect:disabled {
+  background-color: var(--color-background-darker, #e9ecef);
+  color: var(--color-text-secondary, #6c757d);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.fullWidth {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.wizardButton {
+  display: inline-flex; /* Use flex for centering icon/text */
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm, 0.5rem) var(--space-lg, 1.5rem); /* Adjust padding */
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-md, 6px);
+  font-size: var(--font-size-base, 1rem);
+  font-weight: 600;
+  line-height: 1.5;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  min-width: 100px; /* Example min-width */
+}
+
+.wizardButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* Primary Button */
+.wizardButton.primary {
+  background-color: var(--color-primary, #007bff);
+  color: var(--color-primary-contrast, #ffffff);
+  border-color: var(--color-primary, #007bff);
+}
+.wizardButton.primary:not(:disabled):hover {
+  background-color: var(--color-primary-dark, #0056b3);
+  border-color: var(--color-primary-dark, #0056b3);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Secondary Button */
+.wizardButton.secondary {
+  background-color: var(--color-secondary, #6c757d);
+  color: var(--color-secondary-contrast, #ffffff);
+  border-color: var(--color-secondary, #6c757d);
+}
+.wizardButton.secondary:not(:disabled):hover {
+  background-color: var(--color-secondary-dark, #5a6268);
+  border-color: var(--color-secondary-dark, #5a6268);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Success Button */
+.wizardButton.success {
+  background-color: var(--color-success, #28a745);
+  color: var(--color-success-contrast, #ffffff);
+  border-color: var(--color-success, #28a745);
+}
+.wizardButton.success:not(:disabled):hover {
+  background-color: var(--color-success-dark, #218838);
+  border-color: var(--color-success-dark, #218838);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Danger Button (e.g., for Delete) */
+.wizardButton.danger {
+  background-color: var(--color-danger, #dc3545);
+  color: var(--color-danger-contrast, #ffffff);
+  border-color: var(--color-danger, #dc3545);
+}
+.wizardButton.danger:not(:disabled):hover {
+  background-color: var(--color-danger-dark, #c82333);
+  border-color: var(--color-danger-dark, #c82333);
+  box-shadow: var(--shadow-sm);
+}
+
+/* New style for the "Add Q&A" button */
+.addQuestionButton {
+  background-color: rgba(40, 167, 69, 0.1); 
+  border-color: var(--color-success);
+  color: var(--color-success); 
+}
+
+.addQuestionButton:not(:disabled):hover {
+  background-color: rgba(40, 167, 69, 0.2);
+  border-color: var(--color-success-dark, #218838); 
+  color: var(--color-success-dark, #218838); 
+  box-shadow: var(--shadow-xs); 
+}
+
+/* Mobile-specific adjustments //////////////////////////////////////////////////////////////// */
+
+/*  media query for desktop height constraint */
+
+
+
+@media (max-width: 768px) {
+  /* Reduce font size for labels, inputs, and general text elements */
+  .wizardLabel,
+  .wizardInput::placeholder,
+  .wizardInput,
+  .wizardSelect,
+  .api-key-warning,
+  .step-error-message,
+  .or-separator {
+    font-size: var(--font-size-sm); 
+  }
+
+  /* Titles for Step 1, 2, 3  */
+  .GeneratorStep1 h2,
+  .GeneratorStep2 h2,
+  .GeneratorStep3 h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  /* Reduce font size and padding for buttons */
+  .wizardButton {
+    font-size: var(--font-size-sm);
+    padding: var(--space-2) var(--space-3);
+  }
+  
+  
+  .step4Message { 
+    font-size: var(--font-size-lg); 
+  }
+  .GeneratorStep4 p,
+  .step4-message { 
+     font-size: var(--font-size-sm); 
+  }
+
+
+  
+  .GeneratorStep1,
+  .GeneratorStep3,
+  .GeneratorStep4 {
+    padding: var(--space-3); 
+    gap: var(--space-2);    
+    max-height: 100%;
+
+  }
+
+  .GeneratorStep2 {
+    padding: var(--space-3); 
+    gap: var(--space-2);    
+    max-height: 720px;
+  }
+
+
+
+  
+  .GeneratorFormWrapper {
+    gap: var(--space-2); 
+  }
+
+  .GeneratorFormContainer {
+    gap: var(--space-2); 
+  }
+
+  /* Reduce gap in number input row */
+  .NumberInputContainer {
+    gap: var(--space-2); 
+  }
+  .QuestionNumberInputField,
+  .GradeLevelInputField {
+    gap: var(--space-1); 
+  }
+
+  
+  .GeneratorStep3 .wizardLabel {
+    margin-bottom: var(--space-2); 
+  }
+
+  
+  .FinalStepButtonsContainer {
+    gap: var(--space-1);
+    margin-top: var(--space-3); 
+  }
+  
+  /* Adjust button group in Step 2 (if it's the one with margin-top: auto) */
+   .GeneratorStep2 .button-group-spaced { 
+    padding-top: var(--space-2); /* Reduced from var(--space-3) */
+    gap: var(--space-2); /* Reduced from var(--space-3) */
+  }
+
+  /* Adjust navigation buttons spacing */
+  .stepNavigationButtons {
+    margin-top: var(--space-3); /* Ensure some space above nav buttons */
+    gap: var(--space-2); /* Reduce gap between nav buttons */
+    flex-direction: column; /* Stack buttons on mobile for better layout */
+  }
+  .stepNavigationButtons .wizardButton {
+    width: 100%; 
+  }
+  .wizardStepsPanelsContainer {
+    max-height: 75vh; 
+  }
+}

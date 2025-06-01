@@ -1,0 +1,86 @@
+/* src/styles/variables.css */
+:root {
+  /* Colors */
+  --color-brand: #0E2D45; /* Questverse Blue */
+  --color-primary: #0d6efd; /* A vibrant blue, inspired by common web practices and button styles */
+  --color-primary-hover: #0b5ed7; /* A slightly darker shade for hover states */
+  --color-primary-light-bg: rgba(13, 110, 253, 0.08); /* Light background for primary elements on hover */
+  --color-secondary: #6c757d; /* A muted grey, good for secondary actions or text */
+  --color-success: #198754; /* Standard green for success messages */
+  --color-danger: #dc3545; /* Standard red for errors or warnings */
+  --color-warning: #ffc107; /* Standard yellow for warnings */
+  --color-info: #0dcaf0;   /* Standard cyan for informational messages */
+
+  --color-text: #213154; /* Dark grey for primary text, good readability */
+  --color-text-secondary: #6c757d; /* Lighter grey for secondary or muted text */
+  --color-text-light: #ffffff; /* White text, typically for use on dark backgrounds */
+  --color-text-on-primary: #ffffff; /* Text color for primary buttons */
+
+  --color-background: #f8f9fa; /* Very light grey for the main page background */
+  --color-background-card: whitesmoke; /*Darker White for cards, modals, content boxes */
+
+  --color-border: #ced4da; /* Standard border color for inputs, cards */
+  --color-border-light: #dee2e6; /* A lighter border color for subtle divisions */
+  --color-input-focus-border: #86b7fe; /* Border color for focused inputs, matches primary hue */
+  --color-input-focus-shadow: rgba(13, 110, 253, 0.25); /* Box shadow for focused inputs */
+
+  /* Typography */
+  --font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --font-size-sm: 0.875rem; /* Typically 14px */
+  --font-size-base: 1rem; /* Typically 16px */
+  --font-size-lg: 1.25rem; /* Typically 20px */
+
+  --line-height-sm: 1.25;
+  --line-height-base: 1.5;
+  --line-height-lg: 1.75;
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-bold: 600;
+
+  /* Spacing (based on a 1rem = 16px scale) */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 1rem;    /* 16px */
+  --space-4: 1.5rem;  /* 24px */
+  --space-5: 2rem;    /* 32px */
+  --space-6: 3rem;    /* 48px */
+  --space-7: 5rem;    /* 80px (for large top margins like in Login.jsx) */
+
+  /* Borders & Radius */
+  --border-width: 1px;
+  --border-radius: 0.375rem; /* 6px, a common modern radius */
+  --border-radius-sm: 0.25rem; /* 4px */
+  --border-radius-lg: 0.5rem;  /* 8px */
+  --border-radius-pill: 50rem;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Extra small shadow, very subtle */
+  --shadow-sm: 0 .125rem .25rem rgba(0, 0, 0, .075);
+  --shadow-md: 0 .5rem 1rem rgba(0, 0, 0, 0.15); /* Renamed from --shadow for consistency */
+  --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, .175);
+  --shadow-xl: 0 1.5rem 4rem rgba(0, 0, 0, 0.2); /* Extra large shadow for more pronounced depth */
+  --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06); /* Inset shadow */
+  --shadow-none: none; /* Utility to remove shadow */
+
+  /* Transitions */
+  --transition-base: all .2s ease-in-out;
+
+  /* Button and Input Padding */
+  --button-padding-y: 0.5rem;
+  --button-padding-x: 1rem;
+  --input-padding-y: 0.5rem;
+  --input-padding-x: 0.75rem;
+
+  /* Variables for ContentQAWizard */
+  --color-panel-border: rgba(0, 0, 0, 0.1); /* Specific border color for wizard panels */
+  --border-width-panel: .5px;                  /* Specific border width for wizard panels */
+
+  --color-warning-text-direct: orange;        /* For direct orange text as used in API warning */
+  --color-warning-border-direct: orange;      /* For direct orange border as used in API warning */
+
+  --spinner-track-light: rgba(0, 0, 0, 0.1);  /* For light track of larger spinners */
+  --spinner-small-track-light: rgba(255, 255, 255, 0.3); /* For light track of small spinners on dark bg */
+} 

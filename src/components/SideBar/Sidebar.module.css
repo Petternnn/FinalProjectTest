@@ -1,0 +1,205 @@
+/* src/components/SideBar/Sidebar.css */
+.sidebar {
+    width: 200px;
+    min-height: 100vh;
+    background: var(--color-brand);
+
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sidebar-header {
+    padding: var(--space-5) var(--space-3);
+    text-align: center;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(222, 226, 230, 0.4);
+  }
+  
+  
+  .sidebar-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .sidebar-logo-img { 
+    max-width: 120px; 
+    height: auto;     
+    /* display: block; and margin: 0 auto; are removed as flex container handles centering */
+  }
+  
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-3) var(--space-5) var(--space-3);
+  }
+  
+  /* Links */
+  .nav-link {
+    text-decoration: none;
+    color: var(--color-text-secondary, #4b5563);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--border-radius-lg);
+    transition: background-color 0.2s ease, color 0.2s ease;
+    display: block;
+    font-weight: 500;
+  }
+  
+  .nav-link:hover {
+    color: var(--color-primary);
+    background-color: var(--color-primary-light-bg);
+  }
+  
+  .nav-link.active {
+    background-color: var(--color-primary);
+    color: var(--color-text-on-primary, #fff);
+    font-weight: 600;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  
+  /* Logout Button - distinct style */
+  .nav .logout-button {
+    margin-top: auto;
+    padding: var(--space-2) var(--space-3);
+    background-color: transparent;
+    color: var(--color-danger, #ef4444);
+    border: 1px solid var(--color-danger-border, var(--color-danger, #ef4444));
+    border-radius: var(--border-radius-lg);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    text-align: center;
+    font-weight: 500;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .nav .logout-button:hover {
+    background-color: var(--color-danger-hover-bg, rgba(239, 68, 68, 0.1));
+    color: var(--color-danger-dark, #dc2626);
+    border-color: var(--color-danger-dark, #dc2626);
+  }
+  
+  /* Sidebar Toggle Button (Hamburger Menu) */
+  .sidebar-toggle {
+    display: none; /* Hidden by default, shown on mobile via media query */
+    position: fixed;
+    bottom: var(--space-4, 1.5rem);
+    left: var(--space-4, 1.5rem);
+    z-index: 1001;
+    background-color: var(--color-background-card, #fff);
+    border: 1px solid var(--color-border-light, #e0e0e0);
+    border-radius: var(--border-radius-sm, 4px);
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm, 0 2px 4px rgba(0,0,0,0.1));
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* The SPAN element itself is the middle bar of the hamburger */
+  .sidebar-toggle-icon {
+    display: block;
+    position: relative;
+    width: 20px;
+    height: 2px;
+    background-color: var(--color-text, #333);
+    border-radius: 1px;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  /* ::before and ::after create the top and bottom bars */
+  .sidebar-toggle-icon::before,
+  .sidebar-toggle-icon::after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-text, #333);
+    border-radius: 1px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .sidebar-toggle-icon::before {
+    top: -6px; 
+  }
+  
+  .sidebar-toggle-icon::after {
+    bottom: -6px;
+  }
+  
+  /* Hamburger to X animation */
+  .sidebar-toggle--open .sidebar-toggle-icon {
+    background-color: transparent;
+  }
+  
+  .sidebar-toggle--open .sidebar-toggle-icon::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+  
+  .sidebar-toggle--open .sidebar-toggle-icon::after {
+    bottom: 0;
+    transform: rotate(-45deg);
+  }
+  
+  /* Overlay for when mobile menu is open */
+  .sidebar-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Below sidebar, above main content */
+  }
+  
+  /* Mobile Styles for Sidebar */
+  @media (max-width: 768px) { /* Use the same breakpoint as in JS */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0; /* Ensures full height */
+      height: 100vh; /* Explicit full height */
+      width: 280px; /* Or your preferred mobile width */
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 1000;
+      box-shadow: var(--shadow-md); /* More prominent shadow for overlay */
+      border-right: 1px solid rgba(222, 226, 230, 0.4);
+      overflow-y: auto;
+      padding-top: var(--space-5);
+    }
+    
+    .sidebar--mobile-open {
+      transform: translateX(0);
+    }
+    
+    .sidebar-toggle {
+      display: flex; /* Show the toggle button on mobile and enable flex centering */
+    }
+    
+    .sidebar-overlay {
+      display: block; /* Show overlay on mobile when menu is open */
+    }
+    
+    .sidebar-header {
+      padding: var(--space-3);
+    }
+    
+    .nav-link {
+      padding: var(--space-3);
+    }
+  }
+  
