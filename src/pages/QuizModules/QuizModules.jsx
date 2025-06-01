@@ -1,42 +1,78 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from '../../components/SideBar/Sidebar';
 import { useAuth } from '../../contexts/AuthContext';
 import { ref, query as rtdbQuery, orderByChild, equalTo, onValue, remove } from 'firebase/database';
 import { realtimeDB } from '../../services/firebaseConfig';
+import ConfirmationModal from '../../components/Modal/ConfirmationModal';
 import styles from './QuizModules.module.css';
 
 // Component for individual quiz card
 function QuizCard({ quiz, onDeleteQuiz }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const expandButtonRef = useRef(null);
+  const deleteButtonRef = useRef(null);
+  const cardRef = useRef(null);
 
   const toggleExpand = () => {
-    setIsExpanded(!isExpanded);
-  };
-  
-  const handleCardClick = (event) => {
-    // Only toggle expand if the click is not on a button
-    if (event.target.tagName !== 'BUTTON' && !event.target.closest('button')) {
-      setIsExpanded(!isExpanded);
-    }
+    setIsExpanded(prevExpanded => !prevExpanded);
   };
 
-  const handleDeleteClick = (event) => {
-    event.stopPropagation(); // Prevent card click/expand when delete is clicked
-    onDeleteQuiz(quiz.id);
-  };
+  // Effect for card click to expand/collapse
+  useEffect(() => {
+    const cardElement = cardRef.current;
+    if (!cardElement) return;
 
-  //make a readable title if quiz.title is missing
+    const handleCardClick = (event) => {
+      // Only toggle expand if the click is not on a button or an element within a button
+      if (event.target.tagName !== 'BUTTON' && !event.target.closest('button')) {
+        toggleExpand();
+      }
+    };
+
+    cardElement.addEventListener('click', handleCardClick);
+    return () => {
+      cardElement.removeEventListener('click', handleCardClick);
+    };
+  }, []); // Empty dependency array means this runs once on mount and cleans up on unmount
+
+  // Effect for expand button
+  useEffect(() => {
+    const buttonElement = expandButtonRef.current;
+    if (!buttonElement) return;
+
+    buttonElement.addEventListener('click', toggleExpand);
+    return () => {
+      buttonElement.removeEventListener('click', toggleExpand);
+    };
+  }, [toggleExpand]); // Re-run if toggleExpand changes (though it shouldn't in this case)
+
+  // Effect for delete button
+  useEffect(() => {
+    const buttonElement = deleteButtonRef.current;
+    if (!buttonElement) return;
+
+    const handleDeleteClick = (event) => {
+      event.stopPropagation(); // Prevent card click/expand when delete is clicked
+      onDeleteQuiz(quiz.id, quiz.title || quiz.id.replace(/_/g, ' '));
+    };
+
+    buttonElement.addEventListener('click', handleDeleteClick);
+    return () => {
+      buttonElement.removeEventListener('click', handleDeleteClick);
+    };
+  }, [quiz.id, quiz.title, onDeleteQuiz]);
+
   const displayTitle = quiz.title || (quiz.id ? quiz.id.replace(/_/g, ' ') : "Untitled Quiz");
 
   return (
-    <div className={`${styles.quizCard} ${isExpanded ? styles.expanded : ''}`} onClick={handleCardClick}>
+    <div ref={cardRef} className={`${styles.quizCard} ${isExpanded ? styles.expanded : ''}`}>
       <div className={styles.quizCardHeader}>
         <h3 className={styles.quizTitle}>{displayTitle}</h3>
         <div className={styles.actions}>
-          <button onClick={toggleExpand} className={styles.expandButton}>
+          <button ref={expandButtonRef} className={styles.expandButton}>
             {isExpanded ? 'Collapse' : 'Expand'}
           </button>
-          <button onClick={handleDeleteClick} className={styles.deleteButton}>
+          <button ref={deleteButtonRef} className={styles.deleteButton}>
             Delete
           </button>
         </div>
@@ -68,34 +104,53 @@ function QuizCard({ quiz, onDeleteQuiz }) {
   );
 }
 
-
 export default function QuizModulesPage() {
   const [quizzes, setQuizzes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const { currentUser } = useAuth();
 
-  const handleDeleteQuiz = async (quizIdToDelete) => {
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [quizToConfirmDelete, setQuizToConfirmDelete] = useState({ id: null, title: '' });
+
+  // This function is called by QuizCard to initiate deletion
+  const handleDeleteQuizRequest = (quizId, quizTitle) => {
     if (!currentUser) {
       setError("Authentication is required to delete quizzes.");
       console.warn("Attempted to delete quiz without authentication.");
       return;
     }
+    setQuizToConfirmDelete({ id: quizId, title: quizTitle });
+    setIsConfirmModalOpen(true);
+  };
 
-    if (!window.confirm(`Are you sure you want to delete the quiz "${quizzes.find(q => q.id === quizIdToDelete)?.title || quizIdToDelete}"? This action cannot be undone.`)) {
+  // This function is called when the user confirms deletion in the modal
+  const confirmDeleteQuiz = async () => {
+    if (!quizToConfirmDelete.id || !currentUser) {
+      setError("Cannot delete quiz. Missing information or not authenticated.");
+      setIsConfirmModalOpen(false);
       return;
     }
 
-    const quizRefPath = `user_topics/${quizIdToDelete}`;
+    const quizRefPath = `user_topics/${quizToConfirmDelete.id}`;
     const quizDatabaseRef = ref(realtimeDB, quizRefPath);
 
     try {
       await remove(quizDatabaseRef);
-      console.log(`Quiz ${quizIdToDelete} deleted successfully.`);
+      console.log(`Quiz ${quizToConfirmDelete.id} deleted successfully.`);
+      // Quizzes state will update via the onValue listener
     } catch (err) {
       console.error("Error deleting quiz from RTDB:", err);
       setError(`Failed to delete quiz: ${err.message}. Please try again.`);
+    } finally {
+      setIsConfirmModalOpen(false);
+      setQuizToConfirmDelete({ id: null, title: '' });
     }
+  };
+
+  const closeConfirmModal = () => {
+    setIsConfirmModalOpen(false);
+    setQuizToConfirmDelete({ id: null, title: '' });
   };
 
   useEffect(() => {
@@ -109,7 +164,6 @@ export default function QuizModulesPage() {
     setIsLoading(true);
     setError(null);
 
-    // Use the imported realtimeDB instance
     const userTopicsRef = ref(realtimeDB, 'user_topics');
     const userQuizzesQuery = rtdbQuery(
       userTopicsRef,
@@ -122,7 +176,7 @@ export default function QuizModulesPage() {
       if (data) {
         const fetchedQuizzes = Object.keys(data)
           .map(key => ({
-            id: key, // The key!!!: is the sanitizedQuizTitle (quizId)
+            id: key,
             ...data[key],
           }))
           .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
@@ -161,12 +215,21 @@ export default function QuizModulesPage() {
               <QuizCard 
                 key={quiz.id} 
                 quiz={quiz} 
-                onDeleteQuiz={handleDeleteQuiz}
+                onDeleteQuiz={handleDeleteQuizRequest}
               />
             ))}
           </div>
         )}
       </main>
+      <ConfirmationModal
+        isOpen={isConfirmModalOpen}
+        onClose={closeConfirmModal}
+        onConfirm={confirmDeleteQuiz}
+        title="Confirm Deletion"
+        message={`Are you sure you want to delete the quiz "${quizToConfirmDelete.title || quizToConfirmDelete.id}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
     </div>
   );
 } 
