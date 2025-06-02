@@ -56,7 +56,5 @@
     font-size: var(--font-size-base);
     margin-bottom: var(--space-3);
   }
-  .main {
-    max-height: 150vh;
-  }
+
 }
