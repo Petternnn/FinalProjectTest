@@ -14,7 +14,7 @@ import VerifyEmail from '../pages/VerifyEmail/VerifyEmail';
 import AuthActionHandler from '../services/AuthActionHandler';
 import Create from '../pages/Create/Create';
 import QuizModules from '../pages/QuizModules/QuizModules';
-// import SettingsPage from '../pages/Settings/SettingsPage'; // Keep commented if not ready
+import SettingsPage from '../pages/Settings/SettingsPage';
 
 // Utility and Guard Components
 import ProtectedRoute from './ProtectedRoute';
@@ -50,7 +50,7 @@ export const router = createBrowserRouter(
           </ProtectedRoute>
         }
       />
-      {/*
+      
       <Route
         path="settings"
         element={
@@ -59,7 +59,7 @@ export const router = createBrowserRouter(
           </ProtectedRoute>
         }
       />
-      */}
+     
 
       {/* Fallback for any other unmatched path under "/" */}
       {/* This will catch any route not explicitly defined above and send to Login.

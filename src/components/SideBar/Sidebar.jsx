@@ -10,7 +10,7 @@ const MOBILE_BREAKPOINT = 768;
 
 export default function Sidebar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { width: windowWidth } = useWindowSize(); // Use the hook
+  const { width: windowWidth } = useWindowSize(); 
   const { currentUser, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const logoutButtonRef = useRef(null);
@@ -51,7 +51,7 @@ export default function Sidebar() {
         button.removeEventListener('click', handleLogout);
       }
     };
-  }, [handleLogout]); // Re-run if handleLogout changes 
+  }, [handleLogout]); // re-run if handleLogout changes 
 
   const getLinkClassName = ({ isActive }) => {
     return `${styles['nav-link']} ${isActive ? styles.active : ''}`;
@@ -93,13 +93,13 @@ export default function Sidebar() {
             >
               Quiz modules
             </NavLink>
-            {/* <NavLink 
+            <NavLink 
               to="/settings" 
               className={getLinkClassName} 
               onClick={isMobileMenuOpen ? toggleMobileMenu : undefined}
             >
               Settings
-            </NavLink> */}
+            </NavLink>
           </div>
           <button ref={logoutButtonRef} className={styles['logout-button']}>
             Logout

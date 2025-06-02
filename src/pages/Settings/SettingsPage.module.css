@@ -1,0 +1,48 @@
+/* src/pages/Settings/SettingsPage.module.css */
+.container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--color-background);
+}
+
+.mainContent {
+  flex-grow: 1;
+  padding: var(--space-5);
+  margin-left: var(--sidebar-width); 
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.header {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-dark);
+  margin-bottom: var(--space-4);
+  border-bottom: 2px solid var(--color-primary-light);
+  padding-bottom: var(--space-2);
+}
+
+.settingsPanel {
+  background-color: var(--color-background-card);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-5);
+}
+
+.panelTitle {
+  font-size: 1.5rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.profileInfo p {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+  line-height: var(--line-height-base);
+}
+
+.profileInfo strong {
+  color: var(--color-text);
+  margin-right: var(--space-1);
+}
+
