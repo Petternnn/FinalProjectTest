@@ -1,23 +1,39 @@
 /* src/pages/Settings/SettingsPage.module.css */
-.container {
+.pageContainer {
   display: flex;
   min-height: 100vh;
   background-color: var(--color-background);
+  overflow-x: hidden; /* Prevent horizontal scroll on the page container itself */
 }
 
 .mainContent {
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   padding: var(--space-5);
-  margin-left: var(--sidebar-width); 
   transition: margin-left 0.3s ease-in-out;
+  min-height: 0; /* Allows shrinking */
+  max-height: 100vh; /* Constrain to viewport height */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  overflow: hidden; /* Prevent mainContent itself from scrolling; inner elements will handle scroll */
 }
 
-.header {
-  font-size: var(--font-size-lg);
+.pageHeader {
+  font-size: var(--font-size-page-title, 1.8rem);
+  font-weight: var(--font-weight-page-title, 600);
   color: var(--color-text-dark);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-3);
   border-bottom: 2px solid var(--color-primary-light);
   padding-bottom: var(--space-2);
+  flex-shrink: 0;
+}
+
+.settingsLayout {
+  display: flex;
+  flex-grow: 1;
+  min-height: 0; /* Crucial for flex children to shrink and grow correctly */
+  overflow: hidden; /* Constrains the Tabs component within this layout */
+  padding-bottom: var(--space-4);
 }
 
 .settingsPanel {
@@ -44,5 +60,32 @@
 .profileInfo strong {
   color: var(--color-text);
   margin-right: var(--space-1);
+}
+
+.placeholderPanel {
+  padding: var(--space-4);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--border-radius-md);
+  text-align: center;
+  color: var(--color-text-secondary);
+  height: 100%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow-y: auto; /* Allow placeholder to scroll if its text is too long */
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) { /* Matches MOBILE_BREAKPOINT in Sidebar.jsx */
+  .mainContent {
+    margin-left: 0;
+    padding: var(--space-4);
+  }
+
+  .pageHeader {
+    font-size: var(--font-size-lg, 1.25rem);
+    margin-bottom: var(--space-2);
+  }
 }
 

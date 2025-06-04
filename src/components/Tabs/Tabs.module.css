@@ -1,0 +1,122 @@
+/* src/components/Tabs/Tabs.module.css */
+.tabsContainer {
+  display: flex;
+  gap: var(--space-5); /* Space between tab nav and content */
+  width: 100%;
+  flex-grow: 1;
+  height: 100%; /* Make tabsContainer fill the height of settingsLayout */
+  min-height: 0; /* Allow shrinking */
+}
+
+.tabNavigation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 220px; /* Adjust as needed for desktop */
+  flex-shrink: 0;
+  /* Styles for vertical scrollbar if needed on desktop, though typically not for nav */
+  /* overflow-y: auto; */ 
+}
+
+.tabButton {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--border-radius-md);
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  border: 1px solid transparent; /* For focus outline consistency */
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  
+}
+
+.tabIcon {
+  flex-shrink: 0;
+}
+
+.tabButton:hover {
+  background-color: var(--color-background); /* Subtle hover */
+  color: var(--color-text);
+  
+}
+
+.tabButton:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--color-input-focus-shadow);
+}
+
+.tabButton.active {
+  background-color: var(--color-primary-light-bg);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.tabButton.active .tabIcon circle {
+  fill: var(--color-primary);
+}
+
+.tabContent {
+  flex-grow: 1;
+  min-width: 0; /* Important for flex item to shrink if needed */
+  height: 100%; /* Make tabContent fill the height of tabsContainer */
+  
+  /* Add some padding if your panels don't have their own, or if you want consistent spacing */
+  /* padding: var(--space-3); */ 
+  box-sizing: border-box;
+  /* Styles for the content panel will largely come from the panel itself, e.g., ProfilePanel.module.css */
+}
+
+.tabContent:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Mobile adjustments for horizontal tab navigation */
+@media (max-width: 768px) { /* Matches MOBILE_BREAKPOINT in Sidebar.jsx */
+  .tabsContainer {
+    flex-direction: column; /* Stack nav on top of content */
+    gap: var(--space-3); /* Adjust gap for vertical stacking */
+  }
+
+  .tabNavigation {
+    flex-direction: row; /* Arrange tab buttons horizontally */
+    overflow-x: auto;   /* Enable horizontal scrolling for tab buttons */
+    overflow-y: hidden;   /* Hide any potential vertical scrollbar on the nav itself */
+    width: 100%;        /* Navigation takes full width */
+    min-width: auto;    /* Reset desktop min-width */
+    padding: var(--space-1) 0; /* Add some vertical padding */
+    border-bottom: 1px solid var(--color-border-light); /* Visual separator */
+    gap: var(--space-1); /* Smaller gap for horizontal buttons */
+
+    /* Optional: for nicer scrollbar appearance */
+    scrollbar-width: thin; /* "auto" or "thin" */
+    scrollbar-color: var(--color-border) transparent; /* scroll thumb and track */
+  }
+
+  .tabNavigation::-webkit-scrollbar {
+    height: 6px; /* Height of the horizontal scrollbar */
+  }
+  .tabNavigation::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 3px;
+  }
+  .tabNavigation::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+
+  .tabButton {
+    white-space: nowrap; /* Prevent button text from wrapping */
+    flex-shrink: 0;      /* Prevent buttons from shrinking too much */
+    padding: var(--space-2) var(--space-3); /* Adjust padding if needed */
+  }
+
+  /* tabContent already has flex-grow: 1 and height: 100%, overflow-y: auto, 
+     which should work well when tabsContainer is flex-direction: column */
+}

@@ -1,10 +1,11 @@
 // src/pages/Login.jsx
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../services/firebaseConfig';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './Login.module.css';
-import { useLoginValidation } from '../../hooks/useLoginValidation'; // Import the new hook
+import { useLoginValidation } from '../../hooks/useLoginValidation';
+import { useAuth } from '../../contexts/AuthContext';
 import logoImage from '../../assets/logo.png';
 
 // Component: Login
@@ -12,11 +13,19 @@ import logoImage from '../../assets/logo.png';
 
 export default function Login() {
   const navigate = useNavigate();
-  const { validate, errors: validationErrors } = useLoginValidation(); // Use the hook
+  const { currentUser, loading: authLoading } = useAuth();
+  const { validate, errors: validationErrors } = useLoginValidation();
 
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const [submitError, setSubmitError] = useState(''); // For Firebase/general errors
+  const [submitError, setSubmitError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!authLoading && currentUser && currentUser.emailVerified) {
+      console.log('[Login] AuthContext updated. User is logged in and verified. Navigating to /create.');
+      navigate('/create');
+    }
+  }, [currentUser, authLoading, navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -24,20 +33,18 @@ export default function Login() {
     if (submitError) setSubmitError('');
   };
 
-  const handleLoginSubmit = async () => {
+  const performLogin = async () => {
     setSubmitError('');
 
     if (!validate(formData)) {
       console.warn('[Login] Validation failed by hook:', validationErrors);
-      // validationErrors state is already updated by the hook
       return;
     }
 
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, formData.email, formData.password);
-      console.log('[Login] User signed in successfully. Navigating to dashboard.');
-      navigate('/create');
+      console.log('[Login] Firebase signInWithEmailAndPassword successful. AuthContext will handle user update.');
     } catch (error) {
       console.error('[Login] Firebase authentication error:', error);
       let userFriendlyError = 'Invalid email or password. Please try again.';
@@ -47,22 +54,26 @@ export default function Login() {
     }
   };
 
-
-  const handleFormEventSubmit = async (e) => {
-    e.preventDefault();
-    await handleLoginSubmit();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    performLogin();
   };
+
+  if (!authLoading && currentUser && currentUser.emailVerified) {
+    console.log('[Login] Render: User already logged in and verified, redirecting (fallback).');
+    return null;
+  }
 
   return (
     <div className={styles.container}>
-      <img 
+      <img
         src={logoImage}
         alt="Company Logo"
         className={styles.logo}
         draggable="false"
       />
-      <form onSubmit={handleFormEventSubmit} className={styles.form}>
-      
+      <form onSubmit={handleSubmit} className={styles.form}>
+
         <h2 className={styles.title}>Login</h2>
 
         <div className={styles.formFieldGroup}>
@@ -76,6 +87,7 @@ export default function Login() {
             className={styles.input}
             placeholder="Enter your email"
             disabled={loading}
+            autoComplete="email"
           />
           {validationErrors.email && <p className={styles.error}>{validationErrors.email}</p>}
         </div>
@@ -91,19 +103,19 @@ export default function Login() {
             className={styles.input}
             placeholder="Enter your password"
             disabled={loading}
+            autoComplete="current-password"
           />
           {validationErrors.password && <p className={styles.error}>{validationErrors.password}</p>}
         </div>
 
-        {/* Display general submission errors (e.g., from Firebase) */}
         {submitError && <p className={styles.error}>{submitError}</p>}
 
         <button
           type="submit"
           className={`${styles.button} ${loading ? styles.disabled : ''}`}
-          disabled={loading}
+          disabled={loading || authLoading}
         >
-          {loading ? 'Logging in...' : 'Login'}
+          {loading || authLoading ? 'Logging in...' : 'Login'}
         </button>
       </form>
       <p className={styles.signupText}>

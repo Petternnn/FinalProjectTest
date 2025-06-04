@@ -2,7 +2,8 @@
 :root {
   /* Colors */
   --color-brand: #0E2D45; /* Questverse Blue */
-  --color-primary: #0d6efd; /* A vibrant blue, inspired by common web practices and button styles */
+  --color-brand-tealgreen: #00C4B3; /* Teal Green */
+  --color-primary: #206da8; /* A vibrant blue, inspired by common web practices and button styles */
   --color-primary-hover: #0b5ed7; /* A slightly darker shade for hover states */
   --color-primary-light-bg: rgba(13, 110, 253, 0.08); /* Light background for primary elements on hover */
   --color-secondary: #6c757d; /* A muted grey, good for secondary actions or text */
@@ -11,7 +12,7 @@
   --color-warning: #ffc107; /* Standard yellow for warnings */
   --color-info: #0dcaf0;   /* Standard cyan for informational messages */
 
-  --color-text: #213154; /* Dark grey for primary text, good readability */
+  --color-text: #213154dd; /* Dark grey for primary text, good readability */
   --color-text-secondary: #6c757d; /* Lighter grey for secondary or muted text */
   --color-text-light: #ffffff; /* White text, typically for use on dark backgrounds */
   --color-text-on-primary: #ffffff; /* Text color for primary buttons */
@@ -21,11 +22,12 @@
 
   --color-border: #ced4da; /* Standard border color for inputs, cards */
   --color-border-light: #dee2e6; /* A lighter border color for subtle divisions */
+  --color-border-transparent: #e9ecef15; /* A transparent border color for subtle divisions */
   --color-input-focus-border: #86b7fe; /* Border color for focused inputs, matches primary hue */
   --color-input-focus-shadow: rgba(13, 110, 253, 0.25); /* Box shadow for focused inputs */
 
   /* Typography */
-  --font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-sans-serif:  "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
   --font-size-sm: 0.875rem; /* Typically 14px */
@@ -74,6 +76,7 @@
   --input-padding-y: 0.5rem;
   --input-padding-x: 0.75rem;
 
+  --sidebar-width: 200px;  
   /* Variables for ContentQAWizard */
   --color-panel-border: rgba(0, 0, 0, 0.1); /* Specific border color for wizard panels */
   --border-width-panel: .5px;                  /* Specific border width for wizard panels */
@@ -83,4 +86,115 @@
 
   --spinner-track-light: rgba(0, 0, 0, 0.1);  /* For light track of larger spinners */
   --spinner-small-track-light: rgba(255, 255, 255, 0.3); /* For light track of small spinners on dark bg */
+
+  --sidebar-width: 200px;   /* width matches .sidebar { width: … } */
+
+  .poppins-thin {
+    font-family: "Poppins", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+  }
+  
+  .poppins-extralight {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+  }
+  
+  .poppins-light {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .poppins-medium {
+    font-family: "Poppins", sans-serif;
+    font-weight: 540;
+    font-style: normal;
+  }
+  
+  .poppins-semibold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+  }
+  
+  .poppins-bold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .poppins-extrabold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+  }
+  
+  .poppins-black {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  .poppins-thin-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 100;
+    font-style: italic;
+  }
+  
+  .poppins-extralight-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: italic;
+  }
+  
+  .poppins-light-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+  }
+  
+  .poppins-regular-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .poppins-medium-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+  }
+  
+  .poppins-semibold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: italic;
+  }
+  
+  .poppins-bold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+  }
+  
+  .poppins-extrabold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-style: italic;
+  }
+  
+  .poppins-black-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+  }
+  
 } 

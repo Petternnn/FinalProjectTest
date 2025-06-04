@@ -444,8 +444,8 @@ export default function OpenAIQAWizard() {
       <div className={styles.GeneratorFormContainer}>
         {/* Wrap form elements (excluding the button) in a scrollable div */}
         <div className={styles.step1FormContentScrollable}>
-          <h2 className={styles.darkText}>Step 1: </h2>
-          <h3 className={styles.darkText}>Provide Content &amp; Settings</h3>
+          <h2 className={styles.StepTitle }>Step 1: </h2>
+          <h3 className={styles.StepSubtTitle }>Provide Content &amp; Settings</h3>
           {!import.meta.env.VITE_OPENAI_API_KEY && import.meta.env.DEV && (
             <p className={styles.apiKeyWarning}>
               <strong>Warning:</strong> API key not set in .env file.
@@ -628,8 +628,8 @@ export default function OpenAIQAWizard() {
 
     return (
       <div className={styles.QuestionAnswerContainer}>
-        <h2 className={styles.darkText}>Step 2:</h2>
-        <h3 className={styles.darkText}>Review & Edit Q&A</h3>
+        <h2 className={styles.StepTitle}>Step 2:</h2>
+        <h3 className={styles.StepSubtTitle}>Review & Edit Q&A</h3>
 
         {!error && !isGenerating && !isLoading && (
           <div className={styles.addQaButtonContainer}>
@@ -846,8 +846,8 @@ export default function OpenAIQAWizard() {
   function renderStep3() {
     return (
       <>
-        <h2 className={styles.darkText}>Step 3: </h2>
-        <h3 className={styles.darkText}>Add Quiz Details</h3>
+        <h2 className={styles.StepTitle}>Step 3: </h2>
+        <h3 className={styles.StepSubtTitle}>Add Quiz Details</h3>
         {error && <p className={styles.stepErrorMessage}>{error}</p>}
         <div>
           <label
@@ -920,6 +920,7 @@ export default function OpenAIQAWizard() {
             {successMessage}
           </p>
         )}
+        <div className={styles.step4Message}>🎉🎉</div>
         <div className={styles.step4Message}>Your quiz has been saved!</div>
 
         <div className={styles.FinalStepButtonsContainer}>

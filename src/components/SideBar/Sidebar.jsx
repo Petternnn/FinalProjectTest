@@ -5,6 +5,9 @@ import { AuthContext } from '../../contexts/AuthContext';
 import useWindowSize from '../../hooks/useWindowSize'; // Import the custom hook
 import logoImage from '../../assets/logo.png';
 import styles from './Sidebar.module.css';
+// It's good practice to have a default avatar if the user doesn't have one.
+// For now, we'll rely on alt text or a broken image icon if no profilePictureUrl is present.
+import defaultAvatar from '../../assets/default-avatar.png'; // Example if you add one later
 
 const MOBILE_BREAKPOINT = 768;
 
@@ -73,8 +76,32 @@ export default function Sidebar() {
       <div className={sidebarClasses}>
         <div className={styles['sidebar-header']}>
           <div className={styles['sidebar-logo-container']}>
-            <img src={logoImage} alt="Logo" className={styles['sidebar-logo-img']} />
+            <img src={logoImage} alt="Logo" className={styles['sidebar-logo-img']} draggable={false} />
           </div>
+          {currentUser && (
+            <div className={styles['sidebar-user-profile']}>
+              {currentUser.profilePictureUrl ? (
+                <img
+                  src={currentUser.profilePictureUrl}
+                  alt={`${currentUser.firstname || 'User'}'s avatar`}
+                  className={styles['sidebar-user-avatar']}
+                  draggable={false}
+                />
+              ) : (
+                <div className={styles['sidebar-user-avatar-placeholder']}>
+                  <span>{(currentUser.firstname || 'U').charAt(0)}</span>
+                </div>
+              )}
+              <div className={styles['sidebar-user-info']}>
+                <span className={styles['sidebar-user-name']}>
+                  {`${currentUser.firstname || ''} ${currentUser.lastname || ''}`.trim() || 'User Name'}
+                </span>
+                <span className={styles['sidebar-user-role']}>
+                  {currentUser.role || 'User Role'}
+                </span>
+              </div>
+            </div>
+          )}
         </div>
         <nav className={styles.nav}>
           <div className={styles['nav-links']}>

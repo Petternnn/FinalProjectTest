@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 
 // Layout Component
-import App from '../App'; // App.jsx now serves as the root layout
+import App from '../App'; //w serves as the root layout
 
 // Page Components
 import Login from '../pages/Login/Login';
@@ -63,7 +63,7 @@ export const router = createBrowserRouter(
 
       {/* Fallback for any other unmatched path under "/" */}
       {/* This will catch any route not explicitly defined above and send to Login.
-          Alternatively, you could create a dedicated NotFound page. */}
+          Alternatively, could create a dedicated NotFound page. */}
       <Route path="*" element={<Login />} />
     </Route>
   )
