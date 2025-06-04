@@ -13,12 +13,14 @@
   --color-info: #0dcaf0;   /* Standard cyan for informational messages */
 
   --color-text: #213154dd; /* Dark grey for primary text, good readability */
-  --color-text-secondary: #6c757d; /* Lighter grey for secondary or muted text */
+  --color-text-secondary: #536779ec; /* Lighter grey for secondary or muted text */
+  --color-text-secondary-dark: #213154a9; /* Darker Blue but semi transparent */
   --color-text-light: #ffffff; /* White text, typically for use on dark backgrounds */
   --color-text-on-primary: #ffffff; /* Text color for primary buttons */
 
-  --color-background: #f8f9fa; /* Very light grey for the main page background */
+  --color-background: #f5f8fb; /* Very light bluish-grey for the main page background */
   --color-background-card: whitesmoke; /*Darker White for cards, modals, content boxes */
+  --color-background-white: #ffffff; 
 
   --color-border: #ced4da; /* Standard border color for inputs, cards */
   --color-border-light: #dee2e6; /* A lighter border color for subtle divisions */
@@ -46,7 +48,9 @@
   /* Spacing (based on a 1rem = 16px scale) */
   --space-1: 0.25rem;  /* 4px */
   --space-2: 0.5rem;   /* 8px */
+  --space-2-5: 0.75rem;  /* 12px */
   --space-3: 1rem;    /* 16px */
+  --space-3-5: 1.25rem;  /* 20px */
   --space-4: 1.5rem;  /* 24px */
   --space-5: 2rem;    /* 32px */
   --space-6: 3rem;    /* 48px */

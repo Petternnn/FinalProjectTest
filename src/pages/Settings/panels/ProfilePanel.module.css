@@ -1,5 +1,5 @@
 .panelContainer {
-  background-color: var(--color-background);
+  background-color: var(--color-background-white);
   padding: var(--space-5);
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-sm);

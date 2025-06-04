@@ -30,8 +30,8 @@ textarea:focus {
 }
 
 .StepSubtTitle {
-  font-weight: 420;
-  color: var(--color-text-secondary);
+  font-weight: 440;
+  color: var(--color-text-secondary-dark);
 }
 
 .inputRow {
