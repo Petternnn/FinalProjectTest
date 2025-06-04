@@ -38,7 +38,6 @@
   justify-content: center;
   gap: var(--space-4);
   padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--color-border-light);
   flex-shrink: 0;
 }
 
@@ -225,8 +224,12 @@
   flex-grow: 1;
   overflow-y: auto;
   min-height: 0;
+  padding-left: var(--space-3);
+  padding-right: var(--space-3);
   padding-top: var(--space-4);
   padding-bottom: var(--space-3);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--border-radius-md);
 }
 
 .panelHeader {
@@ -236,17 +239,33 @@
   margin-bottom: var(--space-1); 
 }
 
+/* NEW: Styles for the container of buttons in the header */
+.headerActions {
+  display: flex;
+  gap: var(--space-2); /* Adds space between Cancel and Save buttons */
+}
+
+/* General styling for buttons within .headerActions (desktop) */
+.headerActions .button {
+  /* Default padding & font-size for header buttons on desktop */
+  padding: var(--button-padding-y) var(--button-padding-x); /* Or your preferred default */
+  font-size: var(--font-size-sm); /* Or var(--font-size-base) */
+  /* min-width can be inherited from .button or set here if needed */
+}
+
 .editButton, .cancelButtonAlt {
-  padding: var(--button-padding-y) var(--button-padding-x); /* Use variables */
-  font-size: var(--font-size-sm); /* Use variable, or var(--font-size-base) if preferred */
-  border-radius: var(--border-radius); /* Use variable */
+  /* These already have padding & font-size, ensure they are appropriate */
+  /* If .headerActions .button above is too generic, style these individually */
+  padding: var(--button-padding-y) var(--button-padding-x); 
+  font-size: var(--font-size-sm); 
+  border-radius: var(--border-radius);
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-  min-width: 100px;
+  min-width: 100px; /* This might be too large for mobile */
   text-align: center;
-  font-weight: var(--font-weight-medium); /* Use variable, e.g., medium or semibold */
-  border-width: var(--border-width); /* Use variable */
-  border-style: solid; /* Ensure border style is set */
+  font-weight: var(--font-weight-medium); 
+  border-width: var(--border-width); 
+  border-style: solid; 
 }
 
 .editButton {
@@ -268,4 +287,44 @@
 .cancelButtonAlt:hover {
   background-color: var(--color-border-light); /* Slight change on hover */
   border-color: var(--color-text-secondary);
+}
+
+/* --- ADD MEDIA QUERY FOR MOBILE --- */
+@media (max-width: 768px) { /* Or your standard mobile breakpoint */
+  .panelHeader {
+    /* Optional: Adjust header padding on mobile if title/buttons feel cramped */
+    /* padding-left: var(--space-2); 
+       padding-right: var(--space-2); */
+  }
+
+  .headerActions .button, /* Target all buttons within headerActions */
+  .editButton,             /* Specifically target edit button if needed */
+  .cancelButtonAlt {      /* Specifically target cancel button if needed */
+    padding: var(--space-1) var(--space-2); /* Smaller padding for mobile header buttons */
+    font-size: var(--font-size-xs);    /* Ensure font size is small enough */
+    min-width: auto; /* Allow buttons to shrink to fit content on mobile */
+    /* You might also want to reduce horizontal padding more aggressively if needed */
+    /* padding-left: var(--space-1); */
+    /* padding-right: var(--space-1); */
+  }
+
+  /* If Save button (which uses .saveButton class) is also in .headerActions */
+  .headerActions .saveButton {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--font-size-xs);
+    min-width: auto;
+  }
+
+  /* Adjust profile picture section if it also feels too large or cramped on mobile */
+  .profilePictureSection {
+    gap: var(--space-2); /* Reduce gap between image and stacked buttons */
+  }
+  .profilePicturePreview {
+    width: 80px; /* Smaller image on mobile */
+    height: 80px;
+  }
+  .pictureActionsStacked .button {
+    min-width: 120px; /* Adjust if the 150px is too wide for mobile */
+    font-size: var(--font-size-sm); /* Ensure these are also smaller */
+  }
 }

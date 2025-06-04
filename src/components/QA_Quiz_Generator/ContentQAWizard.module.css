@@ -770,6 +770,15 @@ textarea:focus {
     font-size: var(--font-size-lg);
   }
 
+  .spinner {
+    border: var(--border-radius-lg) solid var(--spinner-track-light);
+    border-left-color: var(--color-primary);
+    border-radius: 50%;
+    width: var(--space-2);
+    height: var(--space-2);
+    animation: spin 1s linear infinite;
+  }
+
 
   .wizardButton {
     font-size: var(--font-size-sm);
@@ -869,5 +878,8 @@ textarea:focus {
   }
   .qaListScrollContainer {
     padding: var(--space-2);
+  }
+  .StepSubtTitle {
+    font-size: var(--font-size-md);
   }
 }

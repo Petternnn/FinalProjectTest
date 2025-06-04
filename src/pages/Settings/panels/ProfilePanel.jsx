@@ -209,18 +209,40 @@ export default function ProfilePanel() {
     <div className={styles.panelContainer}>
       <div className={styles.panelHeader}>
         <h2 className={styles.panelTitle}>Profile</h2>
-        <button 
-          type="button" 
-          onClick={handleToggleEditMode} 
-          className={`${styles.button} ${isEditMode ? styles.cancelButtonAlt : styles.editButton}`}
-        >
-          {isEditMode ? 'Cancel' : 'Edit Profile'}
-        </button>
+        <div className={styles.headerActions}>
+          {isEditMode ? (
+            <>
+              <button 
+                type="button" 
+                onClick={handleToggleEditMode}
+                className={`${styles.button} ${styles.cancelButtonAlt}`}
+              >
+                Cancel
+              </button>
+              <button 
+                type="submit"
+                form="profileForm"
+                className={`${styles.button} ${styles.saveButton}`} 
+                disabled={isUploading}
+              >
+                {isUploading ? 'Saving...' : 'Save Changes'}
+              </button>
+            </>
+          ) : (
+            <button 
+              type="button" 
+              onClick={handleToggleEditMode}
+              className={`${styles.button} ${styles.editButton}`}
+            >
+              Edit Profile
+            </button>
+          )}
+        </div>
       </div>
       <p className={styles.panelSubtitle}>Manage your personal information and profile picture.</p>
       
       {currentUser ? (
-        <form onSubmit={handleProfileSave} className={styles.profileForm}>
+        <form onSubmit={handleProfileSave} className={styles.profileForm} id="profileForm">
           <div className={styles.profilePictureSection}>
             <img
               src={previewUrl || DefaultAvatar}
@@ -300,14 +322,6 @@ export default function ProfilePanel() {
             {formError && <p className={`${styles.errorMessage} ${styles.formMessage}`}>{formError}</p>}
             {formSuccess && <p className={`${styles.successMessage} ${styles.formMessage}`}>{formSuccess}</p>}
           </div>
-          
-          {isEditMode && (
-            <div className={styles.actions}>
-              <button type="submit" className={`${styles.button} ${styles.saveButton}`} disabled={isUploading}>
-                {isUploading ? 'Saving...' : 'Save Changes'}
-              </button>
-            </div>
-          )}
         </form>
       ) : (
         <p>Loading user information...</p>
