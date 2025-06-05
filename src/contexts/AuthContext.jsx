@@ -16,8 +16,7 @@ import { auth, db } from '../services/firebaseConfig';
 // Context for managing authentication state and actions.
 export const AuthContext = createContext();
 
-// Custom hook to easily access the AuthContext.
-// Returns the authentication context value.
+// Custom hook to access AuthContext.
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
@@ -26,15 +25,10 @@ export function useAuth() {
   return context;
 }
 
-// Provides authentication context to its children.
-// Manages the current user state and authentication functions.
-// Props:
-//   children: The child components to be wrapped by the provider.
+// Provides authentication context.
 export function AuthProvider({ children }) {
-  // Stores the currently authenticated user object or null.
   const [currentUser, setCurrentUser] = useState(null);
-  // Indicates if the initial auth state is being determined.
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // True until initial auth check completes.
   const [firestoreUnsubscribe, setFirestoreUnsubscribe] = useState(() => null);
 
   useEffect(() => {
@@ -48,71 +42,61 @@ export function AuthProvider({ children }) {
       }
 
       if (user) {
-        let reloadedUser = user; // Use a new variable for the reloaded user
+        let reloadedUser = user;
         try {
-          // Attempt to refresh the user state, especially emailVerified
-          await user.reload();
-          // After reload, auth.currentUser should be the most up-to-date instance
-          reloadedUser = auth.currentUser || user; 
+          await user.reload(); // Refresh user state (e.g., emailVerified)
+          reloadedUser = auth.currentUser || user;
           console.log('[AuthContext] User reloaded. UID:', reloadedUser.uid, 'Email Verified:', reloadedUser.emailVerified);
         } catch (reloadError) {
           console.warn('[AuthContext] Failed to reload user state upon auth change:', reloadError);
-          // Proceed with the 'user' object if reload fails, it might be stale for emailVerified
         }
 
-        // Set initial currentUser with core auth data (including reloaded emailVerified)
-        // This allows ProtectedRoute to get a quick, accurate emailVerified status.
+        // Set initial currentUser with core auth data.
         setCurrentUser({
           uid: reloadedUser.uid,
           email: reloadedUser.email,
           emailVerified: reloadedUser.emailVerified,
           displayName: reloadedUser.displayName,
           photoURL: reloadedUser.photoURL,
-          // Initialize other expected fields from Firestore as undefined or null
-          // so components don't break if they expect them before Firestore loads.
-          // Example:
-          // firstname: undefined, 
+          // Initialize other expected Firestore fields as undefined or null
+          // firstname: undefined,
           // lastname: undefined,
-          // profilePictureUrl: undefined, 
+          // profilePictureUrl: undefined,
         });
-        setLoading(false); // Set loading to false NOW, after initial user object is set
-        console.log('[AuthContext] Initial currentUser set, loading is false. User:', reloadedUser.uid, 'Verified:', reloadedUser.emailVerified);
+        setLoading(false);
+        console.log('[AuthContext] Initial currentUser set. UID:', reloadedUser.uid, 'Verified:', reloadedUser.emailVerified);
 
-        // Now, set up Firestore listener to enrich the currentUser object
+        // Listen for Firestore updates to enrich currentUser.
         const userDocRef = doc(db, 'users', reloadedUser.uid);
         const unsubscribeFirestoreListener = onSnapshot(userDocRef, (docSnap) => {
           if (docSnap.exists()) {
             console.log('[AuthContext] Firestore user data received, enriching currentUser:', docSnap.data());
             setCurrentUser(prevUser => ({
-              ...prevUser, // Keep the already set auth properties from reloadedUser
-              ...docSnap.data(), // Add/overwrite with Firestore data
-              // Ensure core auth properties from reloadedUser are not accidentally overwritten by stale Firestore data
-              // This is a safeguard, especially if Firestore data might lag Auth.
+              ...prevUser,
+              ...docSnap.data(),
+              // Ensure core auth properties are not overwritten by stale Firestore data.
               uid: reloadedUser.uid,
               email: reloadedUser.email,
-              emailVerified: reloadedUser.emailVerified, 
+              emailVerified: reloadedUser.emailVerified,
               displayName: reloadedUser.displayName,
               photoURL: reloadedUser.photoURL,
             }));
           } else {
-            console.warn('[AuthContext] No Firestore document found for user:', reloadedUser.uid, '. User profile might be incomplete.');
-            // currentUser is already set with auth data; Firestore just didn't add more.
+            console.warn('[AuthContext] No Firestore document found for user:', reloadedUser.uid);
           }
         }, (error) => {
           console.error("[AuthContext] Error listening to user document:", error);
-          // currentUser is already set with auth data. Firestore listener failed.
-          // No need to change loading state here again.
         });
         setFirestoreUnsubscribe(() => unsubscribeFirestoreListener);
 
       } else {
         console.log('[AuthContext] User signed out.');
         setCurrentUser(null);
-        setLoading(false); // Also set loading to false on sign out
+        setLoading(false);
       }
     });
 
-    // Cleanup auth subscription on unmount
+    // Cleanup auth and Firestore listeners on unmount.
     return () => {
       console.log('[AuthContext] Cleaning up auth state listener.');
       unsubscribeAuth();
@@ -121,60 +105,43 @@ export function AuthProvider({ children }) {
         firestoreUnsubscribe();
       }
     };
-  }, []); // Empty dependency array is correct here
+  }, []); // Empty dependency array is correct to run only on mount and unmount.
 
-  // Signs out the current user.
-  // Returns a Promise.
   const logout = () => {
     console.log('[AuthContext] Attempting to logout user.');
     return signOut(auth);
   };
 
-  // Creates a new user account with email and password.
-  // Parameters:
-  //   email: The user's email.
-  //   password: The user's password.
-  // Returns a Firebase user credential object.
   const signUp = (email, password) => {
     console.log(`[AuthContext] Attempting to sign up user with email: ${email}`);
     return createUserWithEmailAndPassword(auth, email, password);
   };
-  
-  // Updates the current user's email in Firebase Authentication and sends a verification email to the new address.
-  // Parameters:
-  //   newEmail: The new email address.
-  // Returns a Promise.
+
+  // Updates user's email in Firebase Auth & sends verification email.
   const updateUserEmailInAuth = async (newEmail) => {
     if (!auth.currentUser) throw new Error("No user is currently signed in.");
     console.log(`[AuthContext] Attempting to update email for user ${auth.currentUser.uid} to ${newEmail}`);
     await updateEmail(auth.currentUser, newEmail);
     await sendEmailVerification(auth.currentUser); // Send to new email
     console.log(`[AuthContext] Verification email sent to new address: ${newEmail}`);
-    // The onSnapshot listener and user.reload() on next auth state change will pick up emailVerified status.
   };
 
-  // Updates the current user's password in Firebase Authentication.
-  // Parameters:
-  //   newPassword: The new password.
-  // Returns a Promise.
+  // Updates user's password in Firebase Auth.
   const updateUserPasswordInAuth = (newPassword) => {
     if (!auth.currentUser) throw new Error("No user is currently signed in.");
     console.log(`[AuthContext] Attempting to update password for user ${auth.currentUser.uid}`);
     return updatePassword(auth.currentUser, newPassword);
   };
 
-  // Re-authenticates the current user with their password.
-  // Parameters:
-  //   password: The user's current password.
-  // Returns a Promise.
+  // Re-authenticates current user.
   const reauthenticateUser = (password) => {
     if (!auth.currentUser) throw new Error("No user is currently signed in.");
     const credential = EmailAuthProvider.credential(auth.currentUser.email, password);
     return reauthenticateWithCredential(auth.currentUser, credential);
   };
 
-  // Function to allow components to optimistically update the context's currentUser state.
-  // The onSnapshot listener will eventually ensure consistency with Firestore.
+  // Optimistically updates currentUser in context.
+  // Firestore listener will eventually ensure consistency.
   const updateUserContext = (newUserData) => {
     setCurrentUser(prevUser => {
       if (!prevUser) return null;
@@ -192,7 +159,7 @@ export function AuthProvider({ children }) {
     updateUserEmailInAuth,
     updateUserPasswordInAuth,
     reauthenticateUser,
-    updateUserContext, // Provide this function
+    updateUserContext,
   };
 
   return <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>;

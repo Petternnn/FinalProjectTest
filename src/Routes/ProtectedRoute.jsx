@@ -5,16 +5,15 @@ import { useAuth } from '../contexts/AuthContext';
 // Component: ProtectedRoute
 // Description: A route guard component. If the user is not authenticated,
 // it redirects them to the login page. Otherwise, it renders the child components.
-// Props:
-//   children (React.ReactNode): The child components to render if authenticated.
-// Returns (React.ReactElement): Either the child components or a Navigate component to redirect.
+// Props: children (React.ReactNode): The child components to render if authenticated.
+
 export default function ProtectedRoute({ children }) {
   const { currentUser, loading } = useAuth(); // Use loading state from AuthContext
 
   console.log('[ProtectedRoute] Checking auth status. CurrentUser:', currentUser, 'Loading:', loading);
 
   
-   // If authentication state is still loading, dont render anything yet or show a loader.
+   // When authentication state is still loading, dont render anything yet or show a loader.
    // prevents a flash of the login page before the auth state is resolved.
   
   if (loading) {

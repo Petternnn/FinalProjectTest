@@ -1,52 +1,52 @@
 .wizard-progress-bar-container {
   width: 100%;
-  height: 28px; /* Increased height for text visibility */
+  height: 28px;
   background-color: var(--color-background-muted, #e9ecef);
-  border-radius: var(--border-radius-lg, 12px); /* Larger radius for a modern look */
-  margin-bottom: var(--spacing-lg, 1.5rem); /* Space below the progress bar */
-  overflow: hidden; /* Ensures the fill doesn't overflow the rounded corners */
-  position: relative; /* For positioning the text */
-  border: 1px solid var(--color-border-light, #dee2e6); /* Subtle border */
+  border-radius: var(--border-radius-lg, 12px);
+  margin-bottom: var(--spacing-lg, 1.5rem);
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--color-border-light, #dee2e6);
 }
 
 .wizard-progress-bar-fill {
   height: 100%;
-  background-color: var(--color-primary, #001e3d); /* Use your primary color */
-  border-radius: var(--border-radius-lg, 12px); /* Match container, or slightly less if preferred */
-  transition: width 0.4s ease-out; /* Smooth transition for width changes */
+  background-color: var(--color-primary, #001e3d);
+  border-radius: var(--border-radius-lg, 12px);
+  transition: width 0.4s ease-out;
   display: flex;
   align-items: center;
-  justify-content: flex-end; /* Aligns text to the end of the fill if it fits */
-  position: relative; /* Added: For positioning the ::after pseudo-element */
-  overflow: hidden;   /* Added: To ensure the shine effect is clipped to the fill's bounds */
+  justify-content: flex-end;
+  position: relative;
+  overflow: hidden;
 }
 
 .wizard-progress-bar-fill::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: linear-gradient(
-    100deg, /* Angle of the shine */
-    transparent 30%, /* Start of the shine, more transparent lead-in */
-    rgba(255, 255, 255, 0.08) 48%, /* Peak of the shine, much more subtle */
-    rgba(255, 255, 255, 0.08) 52%, /* Peak of the shine, much more subtle */
-    transparent 70%  /* End of the shine, more transparent lead-out */
+    100deg,
+    /* Angle of the shine */ transparent 30%,
+    rgba(255, 255, 255, 0.08) 48%,
+    rgba(255, 255, 255, 0.08) 52%,
+    transparent 70%
   );
-  background-size: 250% 100%; /* Makes the gradient wider than the element for a sweeping effect */
-  animation: subtleShineAnimation 4.5s infinite linear; /* Slower animation */
-  border-radius: inherit; /* Ensures the shine inherits the parent's border-radius */
-  z-index: 1; /* Ensures it's above the background color but below text if text were inside fill */
+  background-size: 250% 100%;
+  animation: subtleShineAnimation 4.5s infinite linear;
+  border-radius: inherit;
+  z-index: 1;
 }
 
-@keyframes subtleShineAnimation { /* Renamed animation for clarity */
+@keyframes subtleShineAnimation {
   0% {
-    background-position: 150% 0; /* Start shine off-screen to the right */
+    background-position: 150% 0;
   }
   100% {
-    background-position: -150% 0; /* Sweep shine off-screen to the left */
+    background-position: -150% 0;
   }
 }
 
@@ -55,17 +55,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--color-text-on-primary-muted, #ffffff); /* Text color that works on the fill */
+  color: var(--color-text-on-primary-muted, #ffffff);
   font-size: 0.8rem;
   font-weight: 500;
   white-space: nowrap;
-  /* Mix-blend-mode can be used for more sophisticated text visibility, but can be tricky */
-  /* mix-blend-mode: difference; */ /* Example: makes text visible on both light/dark parts */
 }
-
-/* Adjust text color if fill is very light or if text is hard to read */
-/* For example, if your primary color is light:
-.wizard-progress-bar-container .wizard-progress-bar-text {
-  color: var(--color-text, #333);
-}
-*/ 

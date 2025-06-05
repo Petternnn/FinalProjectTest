@@ -2,9 +2,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: var(--space-5); /* Consistent with Login */
+  margin-top: var(--space-5); 
   padding: var(--space-5);
   font-family: var(--font-family-sans-serif);
+  overflow-y: auto;
 }
 
 .form {
@@ -29,18 +30,17 @@
 .formFieldGroup {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1); /* Smaller gap between label, input, and error within the group */
+  gap: var(--space-1); 
 }
 
 .label {
-  /* margin-bottom: var(--space-1); Removed, as gap in formFieldGroup handles it */
   font-weight: var(--font-weight-bold);
   color: var(--color-text);
 }
 
 .input,
 .select { 
-  background-color: var(--color-background-white); /* Ensures select dropdown is white */
+  background-color: var(--color-background-white);
 }
 
 /* Specific select styling for custom arrow */
@@ -141,3 +141,12 @@
 .loginLink:hover {
   text-decoration: underline;
 } 
+
+@media (max-width: 844px) {
+  .title {
+    padding-bottom: var(--space-0-5);
+  }
+  .form {
+    gap: var(--space-3);
+  }
+}

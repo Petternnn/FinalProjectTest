@@ -11,7 +11,7 @@
 }
 
 .panelTitle {
-  font-size: var(--font-size-xl, 1.75rem); /* Using fallback for var(--font-size-xl) */
+  font-size: var(--font-size-xl, 1.75rem);
   color: var(--color-text-dark);
   margin-bottom: 0;
   font-weight: 600;
@@ -47,7 +47,7 @@
   border-radius: 50%;
   object-fit: cover;
   border: 3px solid var(--color-border);
-  background-color: var(--color-background); /* For cases where image is transparent or loading */
+  background-color: var(--color-background); 
   box-shadow: var(--shadow-sm);
   flex-shrink: 0;
 }
@@ -79,7 +79,7 @@
   width: 100%;
   margin-top: var(--space-1);
 }
-/* End of NEW STYLES for Profile Picture Upload */
+
 
 .profileInfo {
   display: flex;
@@ -114,37 +114,37 @@
   padding: var(--input-padding-y) var(--input-padding-x);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
-  background-color: var(--color-background-input, #fff); /* Using a variable for input background */
+  background-color: var(--color-background-input, #fff); 
   font-size: var(--font-size-base);
-  color: var(--color-text); /* Default text color for inputs */
+  color: var(--color-text); 
   width: 100%;
   box-sizing: border-box;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .input:focus,
-.textareaDisplay:focus { /* Assuming textarea might become editable */
+.textareaDisplay:focus { 
   border-color: var(--color-input-focus-border);
-  box-shadow: 0 0 0 0.2rem var(--color-input-focus-shadow); /* Standard focus shadow */
+  box-shadow: 0 0 0 0.2rem var(--color-input-focus-shadow); 
   outline: none;
 }
 
 .inputDisplay {
-  background-color: var(--color-background-disabled, var(--color-background)); /* Readonly fields */
+  background-color: var(--color-background-disabled, var(--color-background));
   color: var(--color-text-secondary);
   cursor: not-allowed;
 }
 
 .textareaDisplay {
   min-height: 80px;
-  resize: vertical; /* Allow vertical resize for textareas */
+  resize: vertical; 
 }
 
 .subHeading {
   font-size: var(--font-size-lg);
   color: var(--color-text-dark);
-  margin-top: var(--space-3); /* Reduced from var(--space-4) */
-  margin-bottom: var(--space-3); /* Increased from var(--space-2) */
+  margin-top: var(--space-3); 
+  margin-bottom: var(--space-3);
   padding-bottom: var(--space-2);
   border-bottom: 1px solid var(--color-border-light);
   font-weight: 600;
@@ -160,15 +160,15 @@
 }
 
 .button {
-  padding: var(--button-padding-y, 0.6rem) var(--button-padding-x, 1.2rem); /* Using fallbacks */
+  padding: var(--button-padding-y, 0.6rem) var(--button-padding-x, 1.2rem);
   font-size: var(--font-size-base);
   border-radius: var(--border-radius);
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-  min-width: 120px; /* Increased min-width */
+  min-width: 120px; 
   text-align: center;
   font-weight: 500;
-  border: 1px solid transparent; /* Base border */
+  border: 1px solid transparent;
 }
 
 .saveButton {
@@ -189,7 +189,7 @@
   opacity: 0.7;
 }
 
-.cancelButton { /* If you re-add it */
+.cancelButton { 
   background-color: transparent;
   color: var(--color-text-secondary);
   border: 1px solid var(--color-border);
@@ -218,7 +218,7 @@
 }
 .buttonDangerOutline:hover {
   background-color: var(--color-danger);
-  color: var(--color-text-on-primary); /* Assuming white text on danger bg */
+  color: var(--color-text-on-primary); 
 } 
 .scrollableFormContent {
   flex-grow: 1;
@@ -239,29 +239,27 @@
   margin-bottom: var(--space-1); 
 }
 
-/* NEW: Styles for the container of buttons in the header */
+
 .headerActions {
   display: flex;
-  gap: var(--space-2); /* Adds space between Cancel and Save buttons */
+  gap: var(--space-2); 
 }
 
-/* General styling for buttons within .headerActions (desktop) */
+
 .headerActions .button {
-  /* Default padding & font-size for header buttons on desktop */
-  padding: var(--button-padding-y) var(--button-padding-x); /* Or your preferred default */
-  font-size: var(--font-size-sm); /* Or var(--font-size-base) */
-  /* min-width can be inherited from .button or set here if needed */
+ 
+  padding: var(--button-padding-y) var(--button-padding-x); 
+  font-size: var(--font-size-sm); 
+ 
 }
 
 .editButton, .cancelButtonAlt {
-  /* These already have padding & font-size, ensure they are appropriate */
-  /* If .headerActions .button above is too generic, style these individually */
   padding: var(--button-padding-y) var(--button-padding-x); 
   font-size: var(--font-size-sm); 
   border-radius: var(--border-radius);
   cursor: pointer;
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-  min-width: 100px; /* This might be too large for mobile */
+  min-width: 100px; 
   text-align: center;
   font-weight: var(--font-weight-medium); 
   border-width: var(--border-width); 
@@ -271,7 +269,8 @@
 .editButton {
   background-color: var(--color-primary-light-bg);
   color: var(--color-primary);
-  border-color: var(--color-primary); /* Use primary color for border for consistency */
+  border-color: var(--color-primary); 
+
 }
 .editButton:hover {
   background-color: var(--color-primary);
@@ -280,12 +279,12 @@
 }
 
 .cancelButtonAlt {
-  background-color: var(--color-background-card); /* Use a card/light background */
+  background-color: var(--color-background-card);
   color: var(--color-text-secondary);
-  border-color: var(--color-border); /* Use standard border color */
+  border-color: var(--color-border); 
 }
 .cancelButtonAlt:hover {
-  background-color: var(--color-border-light); /* Slight change on hover */
+  background-color: var(--color-border-light); 
   border-color: var(--color-text-secondary);
 }
 
@@ -299,32 +298,33 @@
 
   .headerActions .button, 
   .editButton,            
-  .cancelButtonAlt {      /* Specifically target cancel button if needed */
-    padding: var(--space-1) var(--space-2); /* Smaller padding for mobile header buttons */
-    font-size: var(--font-size-xs);    /* Ensure font size is small enough */
-    min-width: auto; /* Allow buttons to shrink to fit content on mobile */
-    /* You might also want to reduce horizontal padding more aggressively if needed */
-    /* padding-left: var(--space-1); */
-    /* padding-right: var(--space-1); */
+  .cancelButtonAlt {     
+    padding: var(--space-1) var(--space-2); 
+    font-size: var(--font-size-xs);    
+    min-width: auto;
+    
+    
+    
   }
 
-  /* If Save button (which uses .saveButton class) is also in .headerActions */
+  
   .headerActions .saveButton {
     padding: var(--space-1) var(--space-2);
     font-size: var(--font-size-xs);
     min-width: auto;
   }
 
-  /* Adjust profile picture section if it also feels too large or cramped on mobile */
+  
   .profilePictureSection {
-    gap: var(--space-2); /* Reduce gap between image and stacked buttons */
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
   }
   .profilePicturePreview {
-    width: 80px; /* Smaller image on mobile */
+    width: 80px; 
     height: 80px;
   }
   .pictureActionsStacked .button {
-    min-width: 120px; /* Adjust if the 150px is too wide for mobile */
-    font-size: var(--font-size-sm); /* Ensure these are also smaller */
+    min-width: 120px; 
+    font-size: var(--font-size-sm); 
   }
 }

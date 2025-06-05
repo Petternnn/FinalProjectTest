@@ -249,7 +249,7 @@ export default function ProfilePanel() {
                     lastName === originalLastName)
                 }
               >
-                {isUploading ? "Saving..." : "Save Changes"}
+                {isUploading ? "Saving..." : "Save"}
               </button>
             </>
           ) : (
@@ -316,9 +316,7 @@ export default function ProfilePanel() {
               </div>
             )}
           </div>
-          {isUploading && (
-            <p className={styles.uploadStatus}>Uploading image...</p>
-          )}
+
           {imageUploadError && !formError && (
             <p className={styles.errorMessage}>{imageUploadError}</p>
           )}

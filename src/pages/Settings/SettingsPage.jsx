@@ -4,7 +4,7 @@ import Tabs from '../../components/Tabs/Tabs'; // Import the new Tabs component
 import ProfilePanel from './panels/ProfilePanel'; // Import the ProfilePanel
 import styles from './SettingsPage.module.css';
 
-// Placeholder components for other settings sections
+// Placeholders for other settings sections to fill later
 const AppearancePanel = () => <div className={styles.placeholderPanel}>Appearance Settings (Coming Soon)</div>;
 const SecurityPanel = () => <div className={styles.placeholderPanel}>Security Settings (Coming Soon)</div>;
 const BillingPanel = () => <div className={styles.placeholderPanel}>Billing Information (Coming Soon)</div>;

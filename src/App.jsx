@@ -1,6 +1,6 @@
 // src/App.jsx
 import { Outlet } from 'react-router-dom';
-// If you had a global Navbar or Footer, you'd import and use them here.
+// move side bar here later rather than in the routes
 
 // Component: App
 // Description: Main application layout component. Renders child routes via Outlet.
@@ -8,9 +8,9 @@ export default function App() {
   console.log('[App] Rendering main application layout with Outlet.');
   return (
     <>
-      {/* Example: <GlobalNavbar /> */}
+      {/* <GlobalNavbar /> */}
       <Outlet /> {/* Child routes defined in the router will render here */}
-      {/* Example: <GlobalFooter /> */}
+      {/*  <GlobalFooter /> */}
     </>
   );
 }

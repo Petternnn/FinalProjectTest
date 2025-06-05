@@ -49,6 +49,7 @@
   --font-weight-bold: 600;
 
   /* Spacing (based on a 1rem = 16px scale) */
+  --space-0-5: 0.125rem;  /* 2px */
   --space-1: 0.25rem;  /* 4px */
   --space-2: 0.5rem;   /* 8px */
   --space-2-5: 0.75rem;  /* 12px */

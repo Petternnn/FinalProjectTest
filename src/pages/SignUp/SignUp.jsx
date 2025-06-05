@@ -236,7 +236,7 @@ export default function SignUp() {
           )}
         </div>
 
-        {/* Display general submission errors */}
+        {/* Display submission errors */}
         {submitError && <p className={styles.error}>{submitError}</p>}
 
         <button

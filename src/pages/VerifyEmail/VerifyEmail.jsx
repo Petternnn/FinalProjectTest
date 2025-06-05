@@ -45,7 +45,7 @@ const VerifyEmail = () => {
     }
 
     // If email is not verified according to AuthContext, start polling
-    // We use auth.currentUser for the reload capability.
+    // use auth.currentUser for the reload capability.
     console.log('[VerifyEmail] Email not verified in AuthContext. Setting up polling.');
     const interval = setInterval(async () => {
       const latestFirebaseAuthUser = auth.currentUser;
@@ -59,30 +59,28 @@ const VerifyEmail = () => {
             if (updateUserContext) {
               updateUserContext({
                 emailVerified: true,
-                // It's good practice to also update other auth-related fields
-                // that might change on reload, if your context uses them.
-                // For example, if displayName or photoURL could be updated by another process.
+
                 displayName: latestFirebaseAuthUser.displayName,
                 photoURL: latestFirebaseAuthUser.photoURL,
               });
             }
-            // The component will re-render due to currentUser change in context,
-            // and the (currentUser.emailVerified) block above will handle the redirect.
-            // No need to call navigate() directly here.
+            
+            
+            
           } else {
             // console.log('[VerifyEmail] Polling: Firebase Auth user email still not verified.');
           }
         } catch (reloadError) {
           console.error('[VerifyEmail] Error reloading user during poll:', reloadError);
-          // Consider stopping polling if reload consistently fails
+         
         }
       } else {
         console.log('[VerifyEmail] Polling: No Firebase Auth user found (user signed out). Clearing interval.');
         clearInterval(interval);
-        // If context also confirms no user, navigate to login
+       
         if (!currentUser) navigate('/login');
       }
-    }, 5000); // Poll every 5 seconds
+    }, 5000); // 5 seconds
 
     return () => {
       console.log('[VerifyEmail] Component unmounting. Clearing verification check interval.');
