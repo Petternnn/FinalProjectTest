@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-The QuestVerse Quiz Generator is one of many pieces for a greater vision. It is a React-based web application designed to help educators and content creators quickly generate, review, and save quiz questions from provided text material. It leverages OpenAI's GPT-4 Turbo for intelligent question generation and Firebase for data storage and user authentication. The quizzes created can be synced with a companion mobile game prototype developed in Godot (a game engine)
+The QuestVerse Quiz Generator is one of many pieces for a greater vision. It is a React-based web application designed to help educators and content creators quickly generate, review, and save quiz questions and options from provided text material. It leverages OpenAI's GPT-4 Turbo for intelligent question generation and Firebase for data storage and user authentication. The quizzes created can be synced with a companion mobile game prototype developed in Godot (a game engine)
 
 **Live Deployment:** [https://questverse.netlify.app]
 **GitHub Repo:** https://github.com/Petternnn/FinalProjectTest
