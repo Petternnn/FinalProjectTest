@@ -20,7 +20,7 @@
 .panelSubtitle {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  margin-bottom: var(--space-4); /* Increased from original for more separation */
+  margin-bottom: var(--space-4);
 }
 
 .profileForm {
@@ -105,7 +105,7 @@
 .label {
   font-size: var(--font-size-sm);
   color: var(--color-text);
-  font-weight: 500; /* Changed from var(--font-weight-bold) to 500 for less emphasis */
+  font-weight: 500;
 }
 
 .input, /* General input style */
@@ -289,16 +289,16 @@
   border-color: var(--color-text-secondary);
 }
 
-/* --- ADD MEDIA QUERY FOR MOBILE --- */
-@media (max-width: 768px) { /* Or your standard mobile breakpoint */
+
+@media (max-width: 768px) { 
   .panelHeader {
-    /* Optional: Adjust header padding on mobile if title/buttons feel cramped */
-    /* padding-left: var(--space-2); 
-       padding-right: var(--space-2); */
+   
+    padding-left: var(--space-2); 
+       padding-right: var(--space-2);
   }
 
-  .headerActions .button, /* Target all buttons within headerActions */
-  .editButton,             /* Specifically target edit button if needed */
+  .headerActions .button, 
+  .editButton,            
   .cancelButtonAlt {      /* Specifically target cancel button if needed */
     padding: var(--space-1) var(--space-2); /* Smaller padding for mobile header buttons */
     font-size: var(--font-size-xs);    /* Ensure font size is small enough */

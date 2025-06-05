@@ -2,11 +2,13 @@
 :root {
   /* Colors */
   --color-brand: #0E2D45; /* Questverse Blue */
-  --color-brand-tealgreen: #00C4B3; /* Teal Green */
-  --color-primary: #206da8; /* A vibrant blue, inspired by common web practices and button styles */
+  --color-brand-dark: #0a2336ea; /* Questverse Blue dark */
+  --color-brand-tealgreen1: #00C4B3; /* Teal Green */
+  --color-brand-tealgreen2: #2FCFD4; /* Teal Green2 Testing */
+  --color-primary: #206da8; /* An adjusted  vibrant blue, inspired by common web practices and button styles */
   --color-primary-hover: #0b5ed7; /* A slightly darker shade for hover states */
   --color-primary-light-bg: rgba(13, 110, 253, 0.08); /* Light background for primary elements on hover */
-  --color-secondary: #6c757d; /* A muted grey, good for secondary actions or text */
+  --color-secondary: #6b757f; /* Slightly bluish-grey tint of #6c757d */
   --color-success: #198754; /* Standard green for success messages */
   --color-danger: #dc3545; /* Standard red for errors or warnings */
   --color-warning: #ffc107; /* Standard yellow for warnings */
@@ -43,6 +45,7 @@
 
   --font-weight-light: 300;
   --font-weight-normal: 400;
+  --font-weight-medium: 500;
   --font-weight-bold: 600;
 
   /* Spacing (based on a 1rem = 16px scale) */

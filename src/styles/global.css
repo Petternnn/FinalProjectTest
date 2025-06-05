@@ -1,6 +1,5 @@
 /* src/styles/global.css */
 
-/* Import the CSS variables */
 @import './variables.css';
 
 /* Basic Reset & Global Styles */
@@ -44,10 +43,20 @@ ol {
   list-style: none;
 }
 
+
+/* ************ */
+
+
+
+
+
+
+
+
 /* Basic button styling */
 button {
   cursor: pointer;
-  font-family: inherit; /* Inherit font from body */
+  font-family: inherit; /* Inherit  from body */
   font-size: inherit;
   border: none;
   background-color: transparent;
@@ -55,15 +64,15 @@ button {
 
 a {
   color: var(--color-primary);
-  text-decoration: none; /* Or underline, depending on preference */
+  text-decoration: none; 
 }
 
 a:hover {
   color: var(--color-primary-hover);
-  text-decoration: underline; /* Optional: underline on hover */
+  text-decoration: underline; 
 }
 
-/* Basic form input styling (can be expanded) */
+/* Basic form input styling */
 input,
 textarea,
 select {
@@ -84,20 +93,3 @@ select:focus {
   box-shadow: 0 0 0 0.25rem var(--color-input-focus-shadow);
 }
 
-/* Utility classes (optional, but can be helpful) */
-.text-center {
-  text-align: center;
-}
-
-.mb-1 { margin-bottom: var(--space-1); }
-.mb-2 { margin-bottom: var(--space-2); }
-.mb-3 { margin-bottom: var(--space-3); }
-/* ... add more as needed */
-
-.mt-1 { margin-top: var(--space-1); }
-.mt-2 { margin-top: var(--space-2); }
-.mt-3 { margin-top: var(--space-3); }
-/* ... add more as needed */
-
-      /* .wizard-button styles (lines 104-175) have been removed from here. */
-      /* They will be moved to ContentQAWizard.module.css */

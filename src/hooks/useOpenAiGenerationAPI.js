@@ -207,6 +207,7 @@ Your entire response MUST be a single valid JSON object with a top-level "questi
     };
 
     try {
+      console.log("[useOpenAIGeneration] Size of data to save:", JSON.stringify(dataToSave)?.length);
       await set(ref(realtimeDB, quizPath), dataToSave);
       console.log("Quiz saved successfully to RTDB:", quizPath, dataToSave);
       setIsSavingQuiz(false);

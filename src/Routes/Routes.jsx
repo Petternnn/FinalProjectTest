@@ -60,10 +60,7 @@ export const router = createBrowserRouter(
         }
       />
      
-
       {/* Fallback for any other unmatched path under "/" */}
-      {/* This will catch any route not explicitly defined above and send to Login.
-          Alternatively, could create a dedicated NotFound page. */}
       <Route path="*" element={<Login />} />
     </Route>
   )

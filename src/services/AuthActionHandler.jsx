@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { applyActionCode, checkActionCode } from 'firebase/auth';
-import { auth } from './firebaseConfig';
+import { auth, db } from './firebaseConfig';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import { serverTimestamp } from 'firebase/firestore';
 
 // Define styles for this component (Inline exception for the styles)
 const actionStyles = {
@@ -98,14 +100,41 @@ export default function AuthActionHandler() {
         switch (mode) {
           case 'verifyEmail':
             console.log('[AuthActionHandler] Verifying email with action code:', actionCode);
-            // optionally check the action code first for info like email
+            
+            // Optionally, check the action code first to get user's email if needed for logging
             // const info = await checkActionCode(auth, actionCode);
-            // console.log('[AuthActionHandler] Action code info:', info);
-            await applyActionCode(auth, actionCode);
-            setMessage('Your email address has been successfully verified! You can now log in.');
+            // console.log('[AuthActionHandler] Action code info for email:', info.data.email);
+
+            await applyActionCode(auth, actionCode); // This marks email as verified in Firebase Auth
+
+            // NOW, update Firestore
+            if (auth.currentUser) { // User should be signed in (or just became signed in by this action)
+              const userDocRef = doc(db, 'users', auth.currentUser.uid);
+              try {
+                await updateDoc(userDocRef, {
+                  emailVerified: true,
+                  updatedAt: serverTimestamp() // Good practice to update timestamp
+                });
+                console.log('[AuthActionHandler] Firestore user document updated for email verification for UID:', auth.currentUser.uid);
+              } catch (firestoreError) {
+                console.error('[AuthActionHandler] Failed to update Firestore document for email verification:', firestoreError);
+                // Decide if this should be a user-facing error.
+                // For now, the primary success is Auth verification.
+              }
+            } else {
+              // This might happen if the user verified on a different browser/device where they aren't logged in.
+              // Or if the action code itself doesn't auto-log in the user.
+              // In this case, AuthContext on their primary device will eventually sync when they user.reload().
+              console.warn('[AuthActionHandler] auth.currentUser is null after applying email verification code. Firestore document not updated immediately by handler.');
+              // One strategy here could be to extract the email from `info` (if you uncomment checkActionCode)
+              // and then do a query for the user by email to update their doc, but that's more complex.
+              // For now, we rely on AuthContext's sync.
+            }
+
+            setMessage('Your email address has been successfully verified! You can now log in or continue.');
             setSuccess(true);
             setError('');
-            console.log('[AuthActionHandler] Email verification successful.');
+            console.log('[AuthActionHandler] Email verification successful in Firebase Auth.');
             break;
           // TODO: Handle other modes like 'resetPassword' or 'recoverEmail' if needed
           default:

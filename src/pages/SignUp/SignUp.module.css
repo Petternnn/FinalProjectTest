@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: var(--space-7); /* Consistent with Login */
+  margin-top: var(--space-5); /* Consistent with Login */
   padding: var(--space-5);
   font-family: var(--font-family-sans-serif);
 }
@@ -40,7 +40,7 @@
 
 .input,
 .select { 
-  background-color: var(--color-background-card); /* Ensures select dropdown is white */
+  background-color: var(--color-background-white); /* Ensures select dropdown is white */
 }
 
 /* Specific select styling for custom arrow */

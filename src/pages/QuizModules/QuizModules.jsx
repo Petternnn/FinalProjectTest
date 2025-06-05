@@ -174,6 +174,7 @@ export default function QuizModulesPage() {
     const unsubscribe = onValue(userQuizzesQuery, (snapshot) => {
       const data = snapshot.val();
       if (data) {
+        console.log("[QuizModules] Fetched quiz data size (raw):", JSON.stringify(data)?.length);
         const fetchedQuizzes = Object.keys(data)
           .map(key => ({
             id: key,

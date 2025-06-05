@@ -537,7 +537,7 @@ export default function OpenAIQAWizard() {
             <textarea
               id="source-text"
               className={styles.wizardTextarea}
-              rows={isMobile ? 1 : 6}
+              rows={isMobile ? 1 : 2}
               placeholder="Paste your text here..."
               value={contentText}
               onChange={(e) => setContentText(e.target.value)}

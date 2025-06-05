@@ -81,7 +81,8 @@
 
 .quizTitle {
   margin: 0;
-  font-size: 1.25rem;
+  font-weight: 380;
+  font-size: var(--font-size-lg, 1.25rem);
   color: var(--color-text);
 }
 
@@ -170,5 +171,8 @@
   .header {
     font-size: var(--font-size-lg, 1.25rem);
     margin-bottom: var(--space-2);
+  }
+  .main {
+    gap: var(--space-4);
   }
 }
