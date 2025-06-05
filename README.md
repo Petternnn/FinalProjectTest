@@ -49,15 +49,14 @@ The QuestVerse Quiz Generator is one of many pieces for a greater vision. It is 
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repository-url>
+    git clone <repository-url>
     cd <project-directory-name>
     ```
 2.  **Install dependencies:**
-    ```bash
+
     npm install
-    # or
-    yarn install
-    ```
+
+
 3.  **Set up Environment Variables:**
     Create a `.env` file in the root of the project and add your Firebase, OpenAI, and Cloudinary API keys/configurations:
     ```env
