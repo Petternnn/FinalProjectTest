@@ -21,9 +21,20 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!authLoading && currentUser && currentUser.emailVerified) {
-      console.log('[Login] AuthContext updated. User is logged in and verified. Navigating to /create.');
-      navigate('/create');
+    console.log('[Login Page useEffect] Triggered. Auth Loading:', authLoading, 'CurrentUser:', currentUser);
+    if (!authLoading && currentUser) {
+      console.log('[Login Page useEffect] Auth loaded and currentUser exists. Email Verified:', currentUser.emailVerified);
+      if (currentUser.emailVerified) {
+        console.log('[Login] AuthContext updated. User is logged in and verified. Navigating to /create.');
+        navigate('/create');
+      } else {
+        console.log('[Login] AuthContext updated. User is logged in but email NOT verified. Navigating to /verify-email.');
+        navigate('/verify-email');
+      }
+    } else if (authLoading) {
+      console.log('[Login Page useEffect] Still waiting for auth to load...');
+    } else if (!currentUser) {
+      console.log('[Login Page useEffect] Auth loaded, but no currentUser found.');
     }
   }, [currentUser, authLoading, navigate]);
 
